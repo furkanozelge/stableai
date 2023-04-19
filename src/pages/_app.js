@@ -1,12 +1,19 @@
-
+import { Fragment } from 'react'
+import Head from 'next/head'
 import { ChakraProvider } from '@chakra-ui/react'
+import 'node_modules/bootstrap/dist/css/bootstrap.min.css'
 
-export default function App({ Component, pageProps }) {
-  
-  return(
-    <ChakraProvider>
-       <Component {...pageProps} />
-    </ChakraProvider>
+function MyApp({ Component, pageProps }) {
+  return (
+    <Fragment>
+      <Head>
+        <title>My App</title>
+      </Head>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </Fragment>
   )
-
 }
+
+export default MyApp
