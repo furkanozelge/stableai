@@ -7,14 +7,15 @@ import {useRouter} from "next/router"
 function index() {
   const router = useRouter();
   const handleClick = () =>{
-
     router.push("/sign-in")
   }
   return (
     <Box mb={5}>
       <Flex align="center" bg="black" justifyContent="space-between">
         <Box ml={5}>
+
         <Image
+          onClick={()=>{router.push("/")}}
           src="/logo.png"
           alt="Logo"
           width={130}
