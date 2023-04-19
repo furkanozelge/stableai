@@ -15,7 +15,7 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import Navbar from "../../components/Navbar"
-
+import { useRouter } from 'next/router';
 const avatars = [
   {
     name: 'Ryan Florence',
@@ -40,6 +40,7 @@ const avatars = [
 ];
 
 export default function JoinOurTeam() {
+  const router = useRouter();
   return (
     <>
     <Navbar />
@@ -156,18 +157,19 @@ export default function JoinOurTeam() {
                   color: 'gray.500',
                 }}
               />
-              <Button fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
-                Sign In!
+              <Button onClick={()=>{router.push("/feed")}} fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
+                Log In!
               </Button>
             </Stack>
             <Button
+              onClick={() => {router.push("/sign-up")}}
               fontFamily={'heading'}
               mt={8}
               w={'full'}
-              bgGradient="linear(to-r, red.400,pink.400)"
+              bgGradient="linear(to-r, purple.400,pink.400)"
               color={'white'}
               _hover={{
-                bgGradient: 'linear(to-r, red.400,pink.400)',
+                bgGradient: 'linear(to-r, purple.400,pink.400)',
                 boxShadow: 'xl',
               }}>
               Join Us!

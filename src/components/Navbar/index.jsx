@@ -13,7 +13,6 @@ function index() {
     <Box mb={5}>
       <Flex align="center" bg="black" justifyContent="space-between">
         <Box ml={5}>
-
         <Image
           onClick={()=>{router.push("/")}}
           src="/logo.png"

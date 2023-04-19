@@ -170,10 +170,10 @@ export default function JoinOurTeam() {
               fontFamily={'heading'}
               mt={8}
               w={'full'}
-              bgGradient="linear(to-r, red.400,pink.400)"
+              bgGradient="linear(to-r, purple.400,pink.400)"
               color={'white'}
               _hover={{
-                bgGradient: 'linear(to-r, red.400,pink.400)',
+                bgGradient: 'linear(to-r, purple.400,pink.400)',
                 boxShadow: 'xl',
               }}>
               Join Us!
