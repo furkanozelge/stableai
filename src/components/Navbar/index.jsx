@@ -21,7 +21,7 @@ function index() {
           height={130}
         />
         </Box>
-        <Button onClick={handleClick} mr={5} color="#000000" bg="#b28afd" size="sm">
+        <Button onClick={handleClick} mr={5} color="#000000" bg="#b28afd" size="md">
           Start Now
         </Button>
       </Flex>
