@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <Head>
-        <title>My App</title>
+        <title>StableAI 🤖</title>
       </Head>
       <ChakraProvider>
         <Component {...pageProps} />

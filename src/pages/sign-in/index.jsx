@@ -18,24 +18,20 @@ import Navbar from "../../components/Navbar"
 import { useRouter } from 'next/router';
 const avatars = [
   {
-    name: 'Ryan Florence',
-    url: 'https://bit.ly/ryan-florence',
+    name: 'Furkan Özelge',
+    url: '/furkan.png',
   },
   {
-    name: 'Segun Adebayo',
-    url: 'https://bit.ly/sage-adebayo',
+    name: 'Yağız Hikmet Karakuş',
+    url: '/yagiz.png',
   },
   {
-    name: 'Kent Dodds',
-    url: 'https://bit.ly/kent-c-dodds',
+    name: 'Serdar Hoşver',
+    url: '/serdar.png',
   },
   {
-    name: 'Prosper Otemuyiwa',
-    url: 'https://bit.ly/prosper-baba',
-  },
-  {
-    name: 'Christian Nwamba',
-    url: 'https://bit.ly/code-beast',
+    name: 'Arda Atakol',
+    url: '/arda.png',
   },
 ];
 
@@ -133,9 +129,7 @@ export default function JoinOurTeam() {
               </Text>
             </Heading>
             <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
-              We’re looking for amazing engineers just like you! Become a part
-              of our rockstar engineering team and skyrocket your career!
-            </Text>
+            Welcome back! Please enter your login credentials to access your account.</Text>
           </Stack>
           <Box as={'form'} mt={10}>
             <Stack spacing={4}>

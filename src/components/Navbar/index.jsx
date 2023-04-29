@@ -10,7 +10,7 @@ function index() {
     router.push("/sign-in")
   }
   return (
-    <Box mb={5}>
+    <Box>
       <Flex align="center" bg="black" justifyContent="space-between">
         <Box ml={5}>
         <Image
