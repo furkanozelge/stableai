@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import Navbar from "../../components/Navbar";
 import { MdDownload } from "react-icons/md";
+import axios from "axios"
 import {
   Flex,
   Input,
@@ -9,11 +10,32 @@ import {
   Button,
   Center,
   Heading,
+  Textarea,
 } from "@chakra-ui/react";
 import Footer from "../../components/Footer";
 function index() {
+  const [prompt, setPrompt] = useState("");
+  const [base64code, setBase64code] = useState("");
+  const [imageSrc, setImageSrc] = useState("";)
+  const handleTextChange = (e) = {
+    setPrompt(e.target.value);
+  }
+  const handleSubmit = async (e) = {
+    e.preventDefault();
+  }
+  try{
+    const response = await.post("api", {prompt});
+    const {base64} = response.data;
+    setBase64code(base64);
+    const imageUrl = `data:image/jpeg;base64,${base64}`;
+    setImageSrc(imageUrl)
+  }
+  catch(error) {
+    console.error("error", error);
+  }
+
   const downloadImage = () =>{
-    
+
   }
   const isGenerated = true;
   return (
@@ -69,6 +91,17 @@ function index() {
             <Text color={"white"} mt={5} as={"i"}>
               Let's Try Now!
             </Text>
+            <Textarea 
+              value={prompt}
+              onChange={handleTextChange}
+              placeholder="Write your dream!"
+              size="md"
+              resize="vertical"
+            />
+            <Button colorScheme="teal" onClick={handleSubmit}>
+              Get Your Dream
+            </Button>
+
             <Input
               textColor={"white"}
               bgColor={"blackAlpha.500"}
