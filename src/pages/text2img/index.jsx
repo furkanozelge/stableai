@@ -13,29 +13,32 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import Footer from "../../components/Footer";
+import Image from "next/image";
 function index() {
-  const [prompt, setPrompt] = useState("");
+  const [text, setText] = useState("");
   const [base64code, setBase64code] = useState("");
-  const [imageSrc, setImageSrc] = useState("";)
-  const handleTextChange = (e) = {
-    setPrompt(e.target.value);
+  const [imageSrc, setImageSrc] = useState("");
+  const handleTextChange = (e) => {
+    setText(e.target.value);
   }
-  const handleSubmit = async (e) = {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try{
+      const response = axios.post("api", {text});
+      const {base64} = response.data;
+      setBase64code(base64);
+      const imageUrl = `data:image/jpeg;base64,${base64}`;
+      setImageSrc(imageUrl)
+    }
+    catch(error) {
+      console.error("error", error);
+    }
   }
-  try{
-    const response = await.post("api", {prompt});
-    const {base64} = response.data;
-    setBase64code(base64);
-    const imageUrl = `data:image/jpeg;base64,${base64}`;
-    setImageSrc(imageUrl)
-  }
-  catch(error) {
-    console.error("error", error);
-  }
-
-  const downloadImage = () =>{
-
+  const downloadImage = () => {
+    const link = document.createElement('a');
+    link.href = imageSrc;
+    link.download = 'stableai.jpg';
+    link.click();
   }
   const isGenerated = true;
   return (
@@ -59,8 +62,7 @@ function index() {
             justifyContent="center"
           >
             <Heading>Here is your dream art!</Heading>
-
-
+            <Image src={imageSrc} alt="art" width={500} height={500} />
             <Text>You can download your art!</Text>
             <MdDownload onClick={downloadImage} size={50}></MdDownload>
           </Box>
@@ -92,7 +94,7 @@ function index() {
               Let's Try Now!
             </Text>
             <Textarea 
-              value={prompt}
+              value={text}
               onChange={handleTextChange}
               placeholder="Write your dream!"
               size="md"
