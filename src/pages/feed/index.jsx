@@ -6,6 +6,7 @@ import { Flex,ButtonGroup,Button,Box ,Text} from '@chakra-ui/react'
 import Footer from '../../components/Footer'
 function index() {
   const router = useRouter();
+
   return (
     <>
     <Navbar />

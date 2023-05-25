@@ -22,7 +22,7 @@ export default function ImageUpload() {
   return (
     <>
       <Navbar />
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
+      <Box m={75} display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
         <Heading as="h1" mb={4}>
           Upload an image and get brand new artwork!
         </Heading>
