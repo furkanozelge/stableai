@@ -16,31 +16,42 @@ import Footer from "../../components/Footer";
 import Image from "next/image";
 function index() {
   const [text, setText] = useState("");
+  const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const ngrokUrl = 'https://f1d9-34-28-231-128.ngrok-free.app/';
   const [base64code, setBase64code] = useState("");
   const [imageSrc, setImageSrc] = useState("");
   const handleTextChange = (e) => {
     setText(e.target.value);
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const response = axios.post("api", {text});
-      const {base64} = response.data;
+    try {
+      const response = await fetch(`https://f18b-34-28-231-128.ngrok-free.app/?prompt=${encodeURIComponent(text)}`, {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        mode:"cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(dataaaaa,data);
+      const base64 = data;
       setBase64code(base64);
       const imageUrl = `data:image/jpeg;base64,${base64}`;
-      setImageSrc(imageUrl)
-    }
-    catch(error) {
-      console.error("error", error);
+      setImageSrc(imageUrl);
+    } catch (error) {
+      console.log("errorrrrr", error);
     }
   }
+  
   const downloadImage = () => {
     const link = document.createElement('a');
     link.href = imageSrc;
     link.download = 'stableai.jpg';
     link.click();
   }
-  const isGenerated = true;
+  const isGenerated = false;
   return (
     <>
       <Navbar />
@@ -96,23 +107,16 @@ function index() {
             <Textarea 
               value={text}
               onChange={handleTextChange}
-              placeholder="Write your dream!"
-              size="md"
-              resize="vertical"
-            />
-            <Button colorScheme="teal" onClick={handleSubmit}>
-              Get Your Dream
-            </Button>
-
-            <Input
               textColor={"white"}
               bgColor={"blackAlpha.500"}
               mt={5}
-              width={600}
+              width={500}
+              height={10}
               placeholder="Your dream in here!"
-            ></Input>
-            <Button size={"lg"} color="#FFFFFF" bg="#000000" mt={5}>
-              Get Your Dream!
+              size="md"
+            />
+            <Button size={"lg"} color="#FFFFFF" bg="#000000" mt={5} onClick={handleSubmit}>
+              Get Your Dream
             </Button>
           </Box>
         </Flex>
