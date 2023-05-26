@@ -2,8 +2,9 @@
   "name": "stableai",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://12d6-34-86-11-74.ngrok-free.app",
   "scripts": {
-    "dev": "next dev",
+    "dev": "PORT=3006 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -15,7 +16,9 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "framer-motion": "^10.12.4",
+    "isomorphic-unfetch": "^4.0.2",
     "next": "13.3.0",
+    "nextjs-cors": "^2.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0"
