@@ -1,53 +1,67 @@
-import { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import { Heading, Box, Button, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-export default function ImageUpload() {
-  const [selectedFile, setSelectedFile] = useState(null);
+const ImageUploader = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleFileInputChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+  const handleImageUpload = async (event) => {
+    event.preventDefault();
+
+    if (!selectedImage) return;
+
+    setIsLoading(true);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64Data = reader.result.split(',')[1];
+
+      try {
+        const url = 'https://b57f-104-154-132-130.ngrok-free.app/upload-image';
+
+        const response = await axios.post(url, {
+          content_image: base64Data
+        });
+
+        if (response.status === 200) {
+          const { data } = response.data;
+          setUploadedImage(data);
+        } else {
+          console.error('Image upload failed.');
+        }
+      } catch (error) {
+        console.error('Error occurred while uploading image:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    reader.readAsDataURL(selectedImage);
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('image', selectedFile);
-
-    // send formData to your backend endpoint for image upload
-    // e.g. using fetch or axios
-    // then handle the response as needed
+  const handleImageSelect = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
   };
 
   return (
-    <>
-      <Navbar />
-      <Box m={75} display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
-        <Heading as="h1" mb={4}>
-          Upload an image and get brand new artwork!
-        </Heading>
-        <form onSubmit={handleFormSubmit}>
-          <Stack spacing={4}>
-            <FormControl>
-              <FormLabel htmlFor="image-upload" fontWeight="bold">
-              </FormLabel>
-              <Input
-                type="file"
-                id="image-upload"
-                accept="image/*"
-                display="none"
-                onChange={handleFileInputChange}
-              />
-              <Button color="#000000" bg="#00000" as="label" htmlFor="image-upload" variant="outline">
-                {selectedFile ? selectedFile.name : 'Choose File'}
-              </Button>
-            </FormControl>
-            <Button color="#000000" bg="#b28afd"  type="submit" disabled={!selectedFile}>
-              Upload
-            </Button>
-          </Stack>
-        </form>
-      </Box>
-    </>
+    <div>
+      <form onSubmit={handleImageUpload}>
+        <input type="file" accept="image/*" onChange={handleImageSelect} />
+        <button type="submit">Upload Image</button>
+      </form>
+
+      {isLoading && <div>Loading...</div>}
+
+      {uploadedImage && (
+        <div>
+          <h2>Uploaded Image:</h2>
+          <img src={`data:image/jpeg;base64, ${uploadedImage}`} alt="Uploaded" />
+        </div>
+      )}
+    </div>
   );
-}
+};
+
+export default ImageUploader;

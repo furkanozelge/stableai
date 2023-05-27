@@ -25,6 +25,7 @@ const App = () => {
     link.download = "stableai.jpg";
     link.click();
   };
+  const [imageSrc, setImageSrc] = useState("");
   const [image, updateImage] = useState();
   const [prompt, updatePrompt] = useState();
   const [loading, updateLoading] = useState();
@@ -32,7 +33,7 @@ const App = () => {
   const generate = async (prompt) => {
     updateLoading(true);
     const result = await axios.get(
-      `https://28fb-34-126-114-169.ngrok-free.app/?prompt=${prompt}`,
+      `https://c62a-34-126-114-169.ngrok-free.app/?prompt=${prompt}`,
       { headers: { "ngrok-skip-browser-warning": "69420" } }
     );
     updateImage(result.data);
