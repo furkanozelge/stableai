@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.10.6",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
-    "framer-motion": "^10.12.4",
+    "framer-motion": "^10.12.16",
     "isomorphic-unfetch": "^4.0.2",
     "next": "13.3.0",
     "nextjs-cors": "^2.1.2",
