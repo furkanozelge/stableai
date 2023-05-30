@@ -5,7 +5,7 @@ const ImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [prompt, setPrompt] = useState("");
   const handleImageUpload = async (event) => {
     event.preventDefault();
 
@@ -18,10 +18,18 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(',')[1];
 
       try {
-        const url = 'https://b57f-104-154-132-130.ngrok-free.app/upload-image';
-
+        const url = 'https://1cc3-107-167-180-18.ngrok-free.app/image2image';
+        const headers = {
+          "content-type":"application/json",
+          "ngrok-skip-browser-warning": "69420"
+        }
+        console.log("base",base64Data);
+        console.log("prompt", prompt)
         const response = await axios.post(url, {
-          content_image: base64Data
+          image: base64Data,
+          prompt: prompt
+        }, {
+          headers: headers
         });
 
         if (response.status === 200) {
@@ -49,7 +57,13 @@ const ImageUploader = () => {
     <div>
       <form onSubmit={handleImageUpload}>
         <input type="file" accept="image/*" onChange={handleImageSelect} />
-        <button type="submit">Upload Image</button>
+        <input
+          type="text" 
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+        />
+      <button type="submit">Upload Image</button>
+        
       </form>
 
       {isLoading && <div>Loading...</div>}
