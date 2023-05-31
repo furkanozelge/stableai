@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import {
   Flex,
+  Stack,
   Box,
   Heading,
+  SkeletonCircle,
+  SkeletonText,
   Wrap,
   Input,
   Button,
@@ -30,7 +33,7 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://1cc3-107-167-180-18.ngrok-free.app/image2image";
+        const url = "https://040d-34-32-208-8.ngrok-free.app/image2image";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
@@ -124,19 +127,42 @@ const ImageUploader = () => {
                 Upload Image
               </Button>
             </form>
-
-            {isLoading && <div>Loading...</div>}
+          </Wrap>
+          {isLoading && <Stack mt={6}>
+              <Text fontSize={"xl"} color={"black"}>
+                Loading...
+              </Text>
+              <SkeletonCircle />
+              <SkeletonText />
+            </Stack>}
 
             {uploadedImage && (
-              <div>
-                <h2>Uploaded Image:</h2>
+              <Flex>
+              <Box
+              mb={180}
+              mt={90}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+            >
+                <Text
+                  bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+                  bgClip="text"
+                  fontSize="2xl"
+                  mb={"0.5em"}
+                  fontWeight="extrabold"
+                >
+                  Generated Image
+                </Text>
                 <img
                   src={`data:image/jpeg;base64, ${uploadedImage}`}
                   alt="Uploaded"
                 />
-              </div>
+              </Box>
+              </Flex>
             )}
-          </Wrap>
         </Box>
       </Flex>
 

@@ -7,7 +7,13 @@ import {
   Box,
   Heading,
   Wrap,
+  SliderThumb,
   Input,
+  SliderTrack,
+  Slider,
+  SliderMark,
+  SliderFilledTrack,
+  Tooltip,
   Button,
   Text,
 } from "@chakra-ui/react";
@@ -16,6 +22,9 @@ const ImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [example, setExample] = useState("");
+  const [sliderValue, setSliderValue] = useState(8.5);
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = (imageNumber) => {
     if (example === imageNumber) {
@@ -127,6 +136,7 @@ const ImageUploader = () => {
               src="/example2.jpg"
               style={{
                 filter: example === 2 ? "brightness(1.5)" : "none",
+
                 cursor: "pointer",
               }}
             ></Image>
@@ -141,8 +151,62 @@ const ImageUploader = () => {
               }}
             ></Image>
           </Wrap>
+          <Text
+            mt={"1.5em"}
+            bgGradient="linear(to bottom, purple,black)"
+            bgClip="text"
+            fontSize="2xl"
+          
+            fontWeight="extrabold"
+          >
+            Your guidance scale is : 
+          </Text>
+          <Text
+        
+            bgGradient="linear(to bottom, black, rgba(255, 55, 133, 0.7))"
+            bgClip="text"
+            fontSize="4xl"
+            mb={"0.5em"}
+            fontWeight="extrabold"
+          >
+            {sliderValue}
+          </Text>
+          <Wrap marginTop={"30px"} marginBottom={"10px"}>
+            <Slider
+              id="slider"
+              step={0.5}
+              defaultValue={8.5}
+              min={0}
+              max={30}
+              colorScheme="purple"
+              onChange={(v) => setSliderValue(v)}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
+              <SliderMark value={1} mt="1" ml="-2.5" fontSize="md">
+                1%
+              </SliderMark>
+              <SliderMark value={15} mt="1" ml="-2.5" fontSize="md">
+                15%
+              </SliderMark>
+              <SliderMark value={30} mt="1" ml="-2.5" fontSize="md">
+                30%
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <Tooltip
+                hasArrow
+                bg="teal.500"
+                color="white"
+                placement="top"
+                isOpen={showTooltip}
+                label={`${sliderValue}%`}
+              >
+                <SliderThumb />
+              </Tooltip>
+            </Slider>
 
-          <Wrap marginBottom={"10px"}>
             <form onSubmit={handleImageUpload}>
               {example === 0 && (
                 <>
@@ -166,15 +230,24 @@ const ImageUploader = () => {
               )}
               {example !== 0 && (
                 <>
-                <Text>Please Select Recommended Image or Upload 2 Image!</Text>
-                <Input
-                  mt={"1em"}
-                  alignContent={"center"}
-                  display={"flex"}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageSelect}
-                />
+                  <Text
+                    mt={"0.5em"}
+                    bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+                    bgClip="text"
+                    fontSize="2xl"
+                    mb={"0.5em"}
+                    fontWeight="extrabold"
+                  >
+                    Please upload photo or select one example!
+                  </Text>
+                  <Input
+                    mt={"1em"}
+                    alignContent={"center"}
+                    display={"flex"}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                  />
                 </>
               )}
               <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
