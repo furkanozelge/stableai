@@ -2,28 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
-import {
-  Flex,
-  Box,
-  Heading,
-  Wrap,
-  SliderThumb,
-  Input,
-  SliderTrack,
-  Slider,
-  SliderMark,
-  SliderFilledTrack,
-  Tooltip,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Box, Wrap, Input, Button, Text,Stack,SkeletonCircle,SkeletonText } from "@chakra-ui/react";
 import Image from "next/image";
 const ImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [selectedImage2, setSelectedImage2] = useState(null);
   const [example, setExample] = useState(0);
-  const [sliderValue, setSliderValue] = useState(8.5);
-  const [showTooltip, setShowTooltip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = (imageNumber) => {
     if (example === imageNumber) {
@@ -35,54 +20,64 @@ const ImageUploader = () => {
 
   const handleImageUpload = async (event) => {
     event.preventDefault();
-
-    if (!selectedImage) return;
-
+  
+    if (!selectedImage || !selectedImage2) return;
+  
     setIsLoading(true);
-
+  
     const reader = new FileReader();
     reader.onload = async () => {
       const base64Data = reader.result.split(",")[1];
-      const base64Data2 = reader.result.split(",")[1];
-
-      try {
-        const url = "https://1cc3-107-167-180-18.ngrok-free.app/image2image";
-        const headers = {
-          "content-type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
-        };
-        console.log("base", base64Data);
-
-        const response = await axios.post(
-          url,
-          {
-            content_image: base64Data,
-            style_image: base64Data2,
-          },
-          {
-            headers: headers,
+      
+      const reader2 = new FileReader();
+      reader2.onload = async () => {
+        const base64Data2 = reader2.result.split(",")[1];
+  
+        try {
+          const url = "https://67b6-34-87-72-126.ngrok-free.app/style-transfer";
+          const headers = {
+            "content-type": "application/json",
+            "ngrok-skip-browser-warning": "69420",
+          };
+  
+          const response = await axios.post(
+            url,
+            {
+              content_image: base64Data,
+              style_image: base64Data2,
+            },
+            {
+              headers: headers,
+            }
+          );
+  
+          if (response.status === 200) {
+            const { data } = response.data;
+            setUploadedImage(data);
+          } else {
+            console.error("Image upload failed.");
           }
-        );
-
-        if (response.status === 200) {
-          const { data } = response.data;
-          setUploadedImage(data);
-        } else {
-          console.error("Image upload failed.");
+        } catch (error) {
+          console.error("Error occurred while uploading image:", error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Error occurred while uploading image:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      };
+  
+      reader2.readAsDataURL(selectedImage2);
     };
-
+  
     reader.readAsDataURL(selectedImage);
   };
+  
 
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
+  };
+  const handleImageSelect2 = (event) => {
+    const file2 = event.target.files[0];
+    setSelectedImage2(file2);
   };
 
   return (
@@ -150,10 +145,8 @@ const ImageUploader = () => {
               }}
             ></Image>
           </Wrap>
-          
-          <Wrap marginTop={"30px"} marginBottom={"10px"}>
-            
 
+          <Wrap marginTop={"30px"} marginBottom={"10px"}>
             <form onSubmit={handleImageUpload}>
               {example === 0 && (
                 <>
@@ -171,7 +164,7 @@ const ImageUploader = () => {
                     display={"flex"}
                     type="file"
                     accept="image/*"
-                    onChange={handleImageSelect}
+                    onChange={handleImageSelect2}
                   />
                 </>
               )}
@@ -201,8 +194,52 @@ const ImageUploader = () => {
                 Upload Image
               </Button>
             </form>
+            {isLoading && (
+            <Stack mt={6}>
+              <Text fontSize={"xl"} color={"black"}>
+                Loading...
+              </Text>
+              <SkeletonCircle />
+              <SkeletonText />
+            </Stack>
+          )}
           </Wrap>
+          {uploadedImage && (
+            <Flex
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+            
+            >
+              <Box
+                mb={180}
+                mt={50}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                textAlign="center"
+              >
+                <Text
+                  bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+                  bgClip="text"
+                  fontSize="2xl"
+                  mb={"0.5em"}
+                  fontWeight="extrabold"
+                >
+                  Generated Image
+                </Text>
+                <img
+                  src={`data:image/jpeg;base64, ${uploadedImage}`}
+                  alt="Uploaded"
+                />
+              </Box>
+            </Flex>
+          )}
         </Box>
+        
       </Flex>
 
       <Footer />

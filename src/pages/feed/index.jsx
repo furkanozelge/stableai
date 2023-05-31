@@ -4,6 +4,9 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { Flex,ButtonGroup,Button,Box ,Text} from '@chakra-ui/react'
 import Footer from '../../components/Footer'
+import { css } from '@emotion/react';
+
+
 function index() {
   const router = useRouter();
 
@@ -19,6 +22,7 @@ bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
         alt="Logo" 
         width={375}
         height={375}
+        style={{cursor: "pointer"}}
         onClick={() =>{router.push("/text2img")}}
     />
     <Text m={10} as="b" fontSize="3xl">Transform your words into captivating visuals with our Text-to-Image technology.</Text>
@@ -26,6 +30,7 @@ bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
         src="/img-img.png" 
         alt="Logo" 
         width={375}
+        style={{cursor: "pointer"}}
         height={375}
         onClick={() =>{router.push("/img2img")}}
     />
@@ -36,6 +41,7 @@ bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
         alt="Logo" 
         width={375}
         height={375}
+        style={{cursor: "pointer"}}
         onClick={() =>{router.push("/style-transfer")}}
     />
   
