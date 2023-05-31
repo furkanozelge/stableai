@@ -83,7 +83,15 @@ const ImageUploader = () => {
           justifyContent="center"
           textAlign="center"
         >
-          <Heading size={"2xl"}>Image To Image!</Heading>
+          <Text
+            bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+            bgClip="text"
+            fontSize="6xl"
+            mb={"0.5em"}
+            fontWeight="extrabold"
+          >
+            Image to Image
+          </Text>
 
           <Text fontSize="2xl" textColor={"black"} marginBottom={"10px"}>
             In this magical page, your dreams come true! Every thought sprouting
@@ -94,17 +102,25 @@ const ImageUploader = () => {
 
           <Wrap marginBottom={"10px"}>
             <form onSubmit={handleImageUpload}>
-              <input
+              <Input
+                mt={"1em"}
+                alignContent={"center"}
+                display={"flex"}
                 type="file"
                 accept="image/*"
                 onChange={handleImageSelect}
               />
-              <input
+              <Input
                 type="text"
+                placeholder="Your imagination is here!"
+                colorScheme="linear(to right, black, rgba(255, 55, 133, 0.7))"
+                textColor={"blackAlpha.400"}
+                color={"black"}
                 value={prompt}
+                _placeholder={{ color: 'black' }}
                 onChange={(e) => setPrompt(e.target.value)}
               />
-              <button type="submit">Upload Image</button>
+              <Button mt={"2em"}colorScheme={"blackAlpha"} type="submit">Upload Image</Button>
             </form>
 
             {isLoading && <div>Loading...</div>}
