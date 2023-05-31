@@ -2,9 +2,27 @@ import React, { useState } from "react";
 import axios from "axios";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
-import { Flex, Box, Wrap, Input, Button, Text,Stack,SkeletonCircle,SkeletonText } from "@chakra-ui/react";
+import { image1Base64 } from "./base64-1";
+import { image2Base64 } from "./base64-2";
+import { image3Base64 } from "./base64-3";
+
+import {
+  Flex,
+  Box,
+  Wrap,
+  Input,
+  Button,
+  Text,
+  Stack,
+  SkeletonCircle,
+  SkeletonText,
+} from "@chakra-ui/react";
 import Image from "next/image";
 const ImageUploader = () => {
+  const example1 = image1Base64;
+  const example2 = image2Base64;
+  const example3 = image3Base64;
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [selectedImage2, setSelectedImage2] = useState(null);
@@ -18,28 +36,74 @@ const ImageUploader = () => {
     }
   };
 
-  const handleImageUpload = async (event) => {
+  const handleOneImage = async (event) => {
     event.preventDefault();
-  
-    if (!selectedImage || !selectedImage2) return;
-  
+
+    if (!selectedImage || example === 0) return;
+
     setIsLoading(true);
-  
+
     const reader = new FileReader();
     reader.onload = async () => {
       const base64Data = reader.result.split(",")[1];
-      
+
+      try {
+        const url = "https://35aa-34-87-72-126.ngrok-free.app/style-transfer";
+        const headers = {
+          "content-type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        };
+        console.log(base64Data);
+        const response = await axios.post(
+          url,
+          {
+            content_image: base64Data,
+            style_image:
+              example === 1 ? example1 : example === 2 ? example2 : example3,
+          },
+          {
+            headers: headers,
+          }
+        );
+
+        if (response.status === 200) {
+          const { data } = response.data;
+          setUploadedImage(data);
+        } else {
+          console.error("Image upload failed.");
+        }
+      } catch (error) {
+        console.error("Error occurred while uploading image:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    reader.readAsDataURL(selectedImage);
+  };
+
+  const handleImageUpload = async (event) => {
+    event.preventDefault();
+
+    if (!selectedImage || !selectedImage2) return;
+
+    setIsLoading(true);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64Data = reader.result.split(",")[1];
+
       const reader2 = new FileReader();
       reader2.onload = async () => {
         const base64Data2 = reader2.result.split(",")[1];
-  
+
         try {
-          const url = "https://67b6-34-87-72-126.ngrok-free.app/style-transfer";
+          const url = "https://d43e-34-87-72-126.ngrok-free.app/style-transfer";
           const headers = {
             "content-type": "application/json",
             "ngrok-skip-browser-warning": "69420",
           };
-  
+          console.log(base64Data);
           const response = await axios.post(
             url,
             {
@@ -50,7 +114,7 @@ const ImageUploader = () => {
               headers: headers,
             }
           );
-  
+
           if (response.status === 200) {
             const { data } = response.data;
             setUploadedImage(data);
@@ -63,13 +127,12 @@ const ImageUploader = () => {
           setIsLoading(false);
         }
       };
-  
+
       reader2.readAsDataURL(selectedImage2);
     };
-  
+
     reader.readAsDataURL(selectedImage);
   };
-  
 
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
@@ -166,10 +229,15 @@ const ImageUploader = () => {
                     accept="image/*"
                     onChange={handleImageSelect2}
                   />
+                  <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
+                    Upload Image
+                  </Button>
                 </>
               )}
-              {example !== 0 && (
-                <>
+            </form>
+            {example !== 0 && (
+              <>
+                <form onSubmit={handleOneImage}>
                   <Text
                     mt={"0.5em"}
                     bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
@@ -178,7 +246,7 @@ const ImageUploader = () => {
                     mb={"0.5em"}
                     fontWeight="extrabold"
                   >
-                    Please upload photo or select one example!
+                    Please upload only one more photo!
                   </Text>
                   <Input
                     mt={"1em"}
@@ -188,30 +256,30 @@ const ImageUploader = () => {
                     accept="image/*"
                     onChange={handleImageSelect}
                   />
-                </>
-              )}
-              <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
-                Upload Image
-              </Button>
-            </form>
+                  <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
+                    Upload Image
+                  </Button>
+                </form>
+              </>
+            )}
+
             {isLoading && (
-            <Stack mt={6}>
-              <Text fontSize={"xl"} color={"black"}>
-                Loading...
-              </Text>
-              <SkeletonCircle />
-              <SkeletonText />
-            </Stack>
-          )}
+              <Stack mt={6}>
+                <Text fontSize={"xl"} color={"black"}>
+                  Loading...
+                </Text>
+                <SkeletonCircle />
+                <SkeletonText />
+              </Stack>
+            )}
           </Wrap>
           {uploadedImage && (
             <Flex
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            textAlign="center"
-            
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
             >
               <Box
                 mb={180}
@@ -239,7 +307,6 @@ const ImageUploader = () => {
             </Flex>
           )}
         </Box>
-        
       </Flex>
 
       <Footer />
