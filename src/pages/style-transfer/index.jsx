@@ -48,12 +48,13 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://35aa-34-87-72-126.ngrok-free.app/style-transfer";
+        const url = "https://558b-34-87-72-126.ngrok-free.app/style-transfer";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
         };
         console.log(base64Data);
+        console.log(example === 1 ? example1 : example === 2 ? example2 : example3)
         const response = await axios.post(
           url,
           {
@@ -98,7 +99,7 @@ const ImageUploader = () => {
         const base64Data2 = reader2.result.split(",")[1];
 
         try {
-          const url = "https://d43e-34-87-72-126.ngrok-free.app/style-transfer";
+          const url = "https://558b-34-87-72-126.ngrok-free.app/style-transfer";
           const headers = {
             "content-type": "application/json",
             "ngrok-skip-browser-warning": "69420",
