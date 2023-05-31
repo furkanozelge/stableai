@@ -5,6 +5,14 @@ import {
   Box,
   Heading,
   SkeletonCircle,
+  Slider,
+  SliderMark,
+  SliderFilledTrack,
+  SliderProps,
+  SliderThumb,
+  SliderMarkProps,
+  SliderTrack,
+  Tooltip,
   SkeletonText,
   Wrap,
   Input,
@@ -20,6 +28,8 @@ const ImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [sliderValue, setSliderValue] = useState(8.5);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [prompt, setPrompt] = useState("");
   const handleImageUpload = async (event) => {
     event.preventDefault();
@@ -123,30 +133,84 @@ const ImageUploader = () => {
                 _placeholder={{ color: "black" }}
                 onChange={(e) => setPrompt(e.target.value)}
               />
+              <Text
+                mt={"1.5em"}
+                bgGradient="linear(to bottom, purple,black)"
+                bgClip="text"
+                fontSize="2xl"
+                fontWeight="extrabold"
+              >
+                Your guidance scale is :
+              </Text>
+              <Text
+                bgGradient="linear(to bottom, black, rgba(255, 55, 133, 0.7))"
+                bgClip="text"
+                fontSize="4xl"
+                mb={"0.5em"}
+                fontWeight="extrabold"
+              >
+                {sliderValue}
+              </Text>
+              <Slider
+              id="slider"
+              step={0.5}
+              defaultValue={8.5}
+              min={0}
+              max={30}
+              colorScheme="purple"
+              onChange={(v) => setSliderValue(v)}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
+              <SliderMark value={1} mt="1" ml="-2.5" fontSize="md">
+                1%
+              </SliderMark>
+              <SliderMark value={15} mt="1" ml="-2.5" fontSize="md">
+                15%
+              </SliderMark>
+              <SliderMark value={30} mt="1" ml="-2.5" fontSize="md">
+                30%
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <Tooltip
+                hasArrow
+                bg="teal.500"
+                color="white"
+                placement="top"
+                isOpen={showTooltip}
+                label={`${sliderValue}%`}
+              >
+                <SliderThumb />
+              </Tooltip>
+            </Slider>
               <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
                 Upload Image
               </Button>
             </form>
           </Wrap>
-          {isLoading && <Stack mt={6}>
+          {isLoading && (
+            <Stack mt={6}>
               <Text fontSize={"xl"} color={"black"}>
                 Loading...
               </Text>
               <SkeletonCircle />
               <SkeletonText />
-            </Stack>}
+            </Stack>
+          )}
 
-            {uploadedImage && (
-              <Flex>
+          {uploadedImage && (
+            <Flex>
               <Box
-              mb={180}
-              mt={90}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              textAlign="center"
-            >
+                mb={180}
+                mt={90}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                textAlign="center"
+              >
                 <Text
                   bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
                   bgClip="text"
@@ -161,8 +225,8 @@ const ImageUploader = () => {
                   alt="Uploaded"
                 />
               </Box>
-              </Flex>
-            )}
+            </Flex>
+          )}
         </Box>
       </Flex>
 

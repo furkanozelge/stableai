@@ -150,61 +150,9 @@ const ImageUploader = () => {
               }}
             ></Image>
           </Wrap>
-          <Text
-            mt={"1.5em"}
-            bgGradient="linear(to bottom, purple,black)"
-            bgClip="text"
-            fontSize="2xl"
           
-            fontWeight="extrabold"
-          >
-            Your guidance scale is : 
-          </Text>
-          <Text
-        
-            bgGradient="linear(to bottom, black, rgba(255, 55, 133, 0.7))"
-            bgClip="text"
-            fontSize="4xl"
-            mb={"0.5em"}
-            fontWeight="extrabold"
-          >
-            {sliderValue}
-          </Text>
           <Wrap marginTop={"30px"} marginBottom={"10px"}>
-            <Slider
-              id="slider"
-              step={0.5}
-              defaultValue={8.5}
-              min={0}
-              max={30}
-              colorScheme="purple"
-              onChange={(v) => setSliderValue(v)}
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-            >
-              <SliderMark value={1} mt="1" ml="-2.5" fontSize="md">
-                1%
-              </SliderMark>
-              <SliderMark value={15} mt="1" ml="-2.5" fontSize="md">
-                15%
-              </SliderMark>
-              <SliderMark value={30} mt="1" ml="-2.5" fontSize="md">
-                30%
-              </SliderMark>
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <Tooltip
-                hasArrow
-                bg="teal.500"
-                color="white"
-                placement="top"
-                isOpen={showTooltip}
-                label={`${sliderValue}%`}
-              >
-                <SliderThumb />
-              </Tooltip>
-            </Slider>
+            
 
             <form onSubmit={handleImageUpload}>
               {example === 0 && (
