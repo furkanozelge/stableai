@@ -94,10 +94,10 @@ const ImageUploader = () => {
           </Text>
 
           <Text fontSize="2xl" textColor={"black"} marginBottom={"10px"}>
-            In this magical page, your dreams come true! Every thought sprouting
-            from your inner world turns into a visual spectacle here. In this
-            place, limited only by your imagination, you will discover how far
-            you can wander in an infinite universe.{" "}
+            Unlock the power of transformation. Witness as your ordinary images
+            transcend into extraordinary masterpieces. With just a click,
+            reimagine the possibilities and let your creativity take flight.
+            Experience the magic of metamorphosis on our canvas of pixels.{" "}
           </Text>
 
           <Wrap marginBottom={"10px"}>
@@ -117,10 +117,12 @@ const ImageUploader = () => {
                 textColor={"blackAlpha.400"}
                 color={"black"}
                 value={prompt}
-                _placeholder={{ color: 'black' }}
+                _placeholder={{ color: "black" }}
                 onChange={(e) => setPrompt(e.target.value)}
               />
-              <Button mt={"2em"}colorScheme={"blackAlpha"} type="submit">Upload Image</Button>
+              <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
+                Upload Image
+              </Button>
             </form>
 
             {isLoading && <div>Loading...</div>}

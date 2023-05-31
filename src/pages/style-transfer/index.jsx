@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import {
@@ -11,11 +11,20 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
+import Image from "next/image";
 const ImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [example, setExample] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [prompt, setPrompt] = useState("");
+  const handleClick = (imageNumber) => {
+    if (example === imageNumber) {
+      setExample(0);
+    } else {
+      setExample(imageNumber);
+    }
+  };
+
   const handleImageUpload = async (event) => {
     event.preventDefault();
 
@@ -25,32 +34,36 @@ const ImageUploader = () => {
 
     const reader = new FileReader();
     reader.onload = async () => {
-      const base64Data = reader.result.split(',')[1];
-      const base64Data2 = reader.result.split(',')[1];
+      const base64Data = reader.result.split(",")[1];
+      const base64Data2 = reader.result.split(",")[1];
 
       try {
-        const url = 'https://1cc3-107-167-180-18.ngrok-free.app/image2image';
+        const url = "https://1cc3-107-167-180-18.ngrok-free.app/image2image";
         const headers = {
-          "content-type":"application/json",
-          "ngrok-skip-browser-warning": "69420"
-        }
-        console.log("base",base64Data);
-   
-        const response = await axios.post(url, {
-          content_image: base64Data,
-          style_image: base64Data2,
-        }, {
-          headers: headers
-        });
+          "content-type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        };
+        console.log("base", base64Data);
+
+        const response = await axios.post(
+          url,
+          {
+            content_image: base64Data,
+            style_image: base64Data2,
+          },
+          {
+            headers: headers,
+          }
+        );
 
         if (response.status === 200) {
           const { data } = response.data;
           setUploadedImage(data);
         } else {
-          console.error('Image upload failed.');
+          console.error("Image upload failed.");
         }
       } catch (error) {
-        console.error('Error occurred while uploading image:', error);
+        console.error("Error occurred while uploading image:", error);
       } finally {
         setIsLoading(false);
       }
@@ -65,7 +78,6 @@ const ImageUploader = () => {
   };
 
   return (
-    
     <div>
       <Navbar />
 
@@ -86,54 +98,95 @@ const ImageUploader = () => {
             mb={"0.5em"}
             fontWeight="extrabold"
           >
-            Style Transfer!
+            Neural Style Transfer!
           </Text>
 
           <Text fontSize="2xl" textColor={"black"} marginBottom={"10px"}>
-            In this magical page, your dreams come true! Every thought sprouting
-            from your inner world turns into a visual spectacle here. In this
-            place, limited only by your imagination, you will discover how far
-            you can wander in an infinite universe.{" "}
+            Blend art and reality seamlessly. Harness the cutting-edge
+            technology of neural style transfer to infuse your world with
+            breathtaking aesthetics. Watch as your images harmoniously merge
+            with the essence of renowned artistic styles, creating captivating
+            visual symphonies. Step into a realm where innovation meets
+            imagination.{" "}
           </Text>
+          <Wrap>
+            <Image
+              onClick={() => handleClick(1)}
+              height={"250"}
+              width={"250"}
+              src="/example1.jpg"
+              style={{
+                filter: example === 1 ? "brightness(1.5)" : "none",
+                cursor: "pointer",
+              }}
+            ></Image>
+            <Image
+              onClick={() => handleClick(2)}
+              height={"250"}
+              width={"400"}
+              src="/example2.jpg"
+              style={{
+                filter: example === 2 ? "brightness(1.5)" : "none",
+                cursor: "pointer",
+              }}
+            ></Image>
+            <Image
+              onClick={() => handleClick(3)}
+              height={"250"}
+              width={"250"}
+              src="/example3.jpg"
+              style={{
+                filter: example === 3 ? "brightness(1.5)" : "none",
+                cursor: "pointer",
+              }}
+            ></Image>
+          </Wrap>
 
           <Wrap marginBottom={"10px"}>
             <form onSubmit={handleImageUpload}>
-              <Input
-                mt={"1em"}
-                alignContent={"center"}
-                display={"flex"}
-                type="file"
-                accept="image/*"
-                onChange={handleImageSelect}
-              />
-              <Input
-                mt={"1em"}
-                alignContent={"center"}
-                display={"flex"}
-                type="file"
-                accept="image/*"
-                onChange={handleImageSelect}
-              />
-              <Button mt={"2em"}colorScheme={"blackAlpha"} type="submit">Upload Image</Button>
-            </form>
-
-            {isLoading && <div>Loading...</div>}
-
-            {uploadedImage && (
-              <div>
-                <h2>Uploaded Image:</h2>
-                <img
-                  src={`data:image/jpeg;base64, ${uploadedImage}`}
-                  alt="Uploaded"
+              {example === 0 && (
+                <>
+                  <Input
+                    mt={"1em"}
+                    alignContent={"center"}
+                    display={"flex"}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                  />
+                  <Input
+                    mt={"1em"}
+                    alignContent={"center"}
+                    display={"flex"}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                  />
+                </>
+              )}
+              {example !== 0 && (
+                <>
+                <Text>Please Select Recommended Image or Upload 2 Image!</Text>
+                <Input
+                  mt={"1em"}
+                  alignContent={"center"}
+                  display={"flex"}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageSelect}
                 />
-              </div>
-            )}
+                </>
+              )}
+              <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
+                Upload Image
+              </Button>
+            </form>
           </Wrap>
         </Box>
       </Flex>
 
       <Footer />
-</div>
+    </div>
   );
 };
 
