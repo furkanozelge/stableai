@@ -4,6 +4,13 @@ import {
   Container,
   Text,
   Input,
+  SliderProps,
+  SliderThumb,
+  Slider,
+  SliderMark,
+  SliderTrack,
+  SliderFilledTrack,
+  Tooltip,
   Button,
   Box,
   Wrap,
@@ -92,7 +99,8 @@ const App = () => {
   const [image, updateImage] = useState();
   const [prompt, updatePrompt] = useState();
   const [loading, updateLoading] = useState();
-
+  const [sliderValue, setSliderValue] = useState(8.5);
+  const [showTooltip, setShowTooltip] = useState(false);
   const generate = async (prompt) => {
     updateLoading(true);
     const result = await axios.get(
@@ -185,13 +193,61 @@ const App = () => {
             place, limited only by your imagination, you will discover how far
             you can wander in an infinite universe.{" "}
           </Text>
+          <Text
+              bgGradient="linear(to bottom, black, rgba(255, 55, 133, 0.7))"
+              bgClip="text"
+              fontSize="4xl"
+              mb={"0.5em"}
+              fontWeight="extrabold"
+            >
+              {sliderValue}
+            </Text>
+          <Flex w={500} marginBottom={50}>
+          
+            <Slider
+              id="slider"
+              step={0.5}
+              defaultValue={8.5}
+              min={0}
+              max={30}
+              colorScheme="purple"
+              onChange={(v) => setSliderValue(v)}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
+              <SliderMark value={1} mt="1" ml="-2.5" fontSize="md">
+                1%
+              </SliderMark>
+              <SliderMark value={15} mt="1" ml="-2.5" fontSize="md">
+                15%
+              </SliderMark>
+              <SliderMark value={30} mt="1" ml="-2.5" fontSize="md">
+                30%
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack />
+              </SliderTrack>
+              <Tooltip
+                hasArrow
+                bg="teal.500"
+                color="white"
+                placement="top"
+                isOpen={showTooltip}
+                label={`${sliderValue}%`}
+              >
+                <SliderThumb />
+              </Tooltip>
+            </Slider>
+          </Flex>
 
-          <Wrap marginBottom={"10px"}>
+          <Wrap marginBottom={"30px"}>
+
             <Input
               value={prompt}
               onChange={(e) => updatePrompt(e.target.value)}
               width={"350px"}
             ></Input>
+
             <Button
               onClick={(e) => generate(prompt)}
               colorScheme={"blackAlpha"}
