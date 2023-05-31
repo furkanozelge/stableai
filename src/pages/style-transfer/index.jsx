@@ -21,10 +21,9 @@ import Image from "next/image";
 const ImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [example, setExample] = useState("");
+  const [example, setExample] = useState(0);
   const [sliderValue, setSliderValue] = useState(8.5);
   const [showTooltip, setShowTooltip] = useState(false);
-
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = (imageNumber) => {
     if (example === imageNumber) {
