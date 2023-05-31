@@ -10,9 +10,10 @@ function index() {
   return (
     <>
     <Navbar />
-    <Flex bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
+    <Flex width={"100%"} display={"flex"} justifyContent={"center"} 
+bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
       
-   <Box m={50} display="flex" flexDirection="column" alignItems="center" justifyContent="center" >
+   <Box m={50} display="flex"  flexDirection="column" alignItems="center" justifyContent="center" >
     <Image
         src="/text-image.png" 
         alt="Logo" 
