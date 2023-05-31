@@ -31,6 +31,9 @@ const ImageUploader = () => {
   const [sliderValue, setSliderValue] = useState(8.5);
   const [showTooltip, setShowTooltip] = useState(false);
   const [prompt, setPrompt] = useState("");
+  const sliderToFloat = () => {
+    const floatValue = parseFloat(sliderValue);
+  }
   const handleImageUpload = async (event) => {
     event.preventDefault();
 
@@ -43,20 +46,19 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://b5ed-34-87-72-126.ngrok-free.app/image2image";
+        const url = "https://24d1-34-87-72-126.ngrok-free.app/image2image";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
         };
         console.log("base", base64Data);
         console.log("prompt", prompt);
-       
         const response = await axios.post(
           url,
           {
             image: base64Data,
             prompt: prompt,
-            scale: sliderValue.toString
+            scale: sliderValue
           },
           {
             headers: headers,
@@ -114,7 +116,7 @@ const ImageUploader = () => {
             Experience the magic of metamorphosis on our canvas of pixels.{" "}
           </Text>
 
-          <Wrap marginBottom={"10px"}>
+          <Wrap w={400} marginBottom={"10px"}>
             <form onSubmit={handleImageUpload}>
               <Input
                 mt={"1em"}
