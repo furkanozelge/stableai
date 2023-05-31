@@ -166,18 +166,11 @@ const App = () => {
             backgroundSize="cover"
             animation="slide 3s infinite"
           />
-          <Box
-            borderRadius={"25px"}
-            width="280px"
-            height="180px"
-            bg={`url(${images6[currentImageIndex]})`}
-            backgroundSize="cover"
-            animation="slide 3s infinite"
-          />
+
 
         </Box>
 
-          <Text ml={40}  mr={40} fontSize="2xl" textColor={"black"} marginBottom={"10px"}>
+          <Text  fontSize="2xl" textColor={"black"} marginBottom={"10px"}>
             In this magical page, your dreams come true! Every thought sprouting
             from your inner world turns into a visual spectacle here. In this
             place, limited only by your imagination, you will discover how far

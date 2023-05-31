@@ -1,5 +1,17 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import {
+  Flex,
+  Box,
+  Heading,
+  Wrap,
+  Input,
+  Button,
+  Text,
+} from "@chakra-ui/react";
+import Image from "next/image";
+import axios from "axios";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
 
 const ImageUploader = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -15,31 +27,35 @@ const ImageUploader = () => {
 
     const reader = new FileReader();
     reader.onload = async () => {
-      const base64Data = reader.result.split(',')[1];
+      const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = 'https://1cc3-107-167-180-18.ngrok-free.app/image2image';
+        const url = "https://1cc3-107-167-180-18.ngrok-free.app/image2image";
         const headers = {
-          "content-type":"application/json",
-          "ngrok-skip-browser-warning": "69420"
-        }
-        console.log("base",base64Data);
-        console.log("prompt", prompt)
-        const response = await axios.post(url, {
-          image: base64Data,
-          prompt: prompt
-        }, {
-          headers: headers
-        });
+          "content-type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        };
+        console.log("base", base64Data);
+        console.log("prompt", prompt);
+        const response = await axios.post(
+          url,
+          {
+            image: base64Data,
+            prompt: prompt,
+          },
+          {
+            headers: headers,
+          }
+        );
 
         if (response.status === 200) {
           const { data } = response.data;
           setUploadedImage(data);
         } else {
-          console.error('Image upload failed.');
+          console.error("Image upload failed.");
         }
       } catch (error) {
-        console.error('Error occurred while uploading image:', error);
+        console.error("Error occurred while uploading image:", error);
       } finally {
         setIsLoading(false);
       }
@@ -55,25 +71,58 @@ const ImageUploader = () => {
 
   return (
     <div>
-      <form onSubmit={handleImageUpload}>
-        <input type="file" accept="image/*" onChange={handleImageSelect} />
-        <input
-          type="text" 
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-        />
-      <button type="submit">Upload Image</button>
-        
-      </form>
+      <Navbar />
 
-      {isLoading && <div>Loading...</div>}
+      <Flex bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
+        <Box
+          mb={180}
+          mt={90}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+        >
+          <Heading size={"2xl"}>Image To Image!</Heading>
 
-      {uploadedImage && (
-        <div>
-          <h2>Uploaded Image:</h2>
-          <img src={`data:image/jpeg;base64, ${uploadedImage}`} alt="Uploaded" />
-        </div>
-      )}
+          <Text fontSize="2xl" textColor={"black"} marginBottom={"10px"}>
+            In this magical page, your dreams come true! Every thought sprouting
+            from your inner world turns into a visual spectacle here. In this
+            place, limited only by your imagination, you will discover how far
+            you can wander in an infinite universe.{" "}
+          </Text>
+
+          <Wrap marginBottom={"10px"}>
+            <form onSubmit={handleImageUpload}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+              />
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+              />
+              <button type="submit">Upload Image</button>
+            </form>
+
+            {isLoading && <div>Loading...</div>}
+
+            {uploadedImage && (
+              <div>
+                <h2>Uploaded Image:</h2>
+                <img
+                  src={`data:image/jpeg;base64, ${uploadedImage}`}
+                  alt="Uploaded"
+                />
+              </div>
+            )}
+          </Wrap>
+        </Box>
+      </Flex>
+
+      <Footer />
     </div>
   );
 };
