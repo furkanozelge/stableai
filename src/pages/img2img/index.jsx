@@ -43,18 +43,20 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://040d-34-32-208-8.ngrok-free.app/image2image";
+        const url = "https://b5ed-34-87-72-126.ngrok-free.app/image2image";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
         };
         console.log("base", base64Data);
         console.log("prompt", prompt);
+       
         const response = await axios.post(
           url,
           {
             image: base64Data,
             prompt: prompt,
+            scale: sliderValue.toString
           },
           {
             headers: headers,
@@ -76,7 +78,6 @@ const ImageUploader = () => {
 
     reader.readAsDataURL(selectedImage);
   };
-
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);

@@ -23,7 +23,7 @@ import {
   ScaleFade,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-
+import styles from "./style.module.css";
 import Navbar from "../../components/Navbar";
 import { MdDownload } from "react-icons/md";
 import axios from "axios";
@@ -104,7 +104,7 @@ const App = () => {
   const generate = async (prompt) => {
     updateLoading(true);
     const result = await axios.get(
-      `https://040d-34-32-208-8.ngrok-free.app/?prompt=${prompt}`,
+      `https://ed3c-34-87-72-126.ngrok-free.app/?prompt=${prompt}&scale=${sliderValue}`,
       { headers: { "ngrok-skip-browser-warning": "69420" } }
     );
     updateImage(result.data);
@@ -142,48 +142,50 @@ const App = () => {
             justifyContent="center"
             alignItems="center"
           >
-            <Box
+            <Image
+              className="imageof"
               borderRadius={"25px"}
               width="280px"
-              mr={3}
               height="180px"
-              bg={`url(${images[currentImageIndex]})`}
-              backgroundSize="cover"
-              animation="slide 3s infinite"
+              src={images[currentImageIndex]}
+              alt=""
+              layout="responsive"
             />
-            <Box
-              borderRadius={"25px"}
-              width="290px"
-              mr={3}
-              height="190px"
-              bg={`url(${images2[currentImageIndex]})`}
-              backgroundSize="cover"
-              animation="slide 3s infinite"
-            />
-            <Box
-              borderRadius={"25px"}
-              width="300px"
-              mr={3}
-              height="200px"
-              bg={`url(${images3[currentImageIndex]})`}
-              backgroundSize="cover"
-              animation="slide 3s infinite"
-            />
-            <Box
-              borderRadius={"25px"}
-              width="300px"
-              height="200px"
-              bg={`url(${images4[currentImageIndex]})`}
-              backgroundSize="cover"
-              animation="slide 3s infinite"
-            />
-            <Box
+            <Image
+              className="imageof"
               borderRadius={"25px"}
               width="290px"
               height="190px"
-              bg={`url(${images5[currentImageIndex]})`}
-              backgroundSize="cover"
-              animation="slide 3s infinite"
+              src={images2[currentImageIndex]}
+              alt=""
+              layout="responsive"
+            />
+            <Image
+              className="imageof"
+              borderRadius={"25px"}
+              width="300px"
+              height="200px"
+              src={images3[currentImageIndex]}
+              alt=""
+              layout="responsive"
+            />
+            <Image
+              className="imageof"
+              borderRadius={"25px"}
+              width="290px"
+              height="190px"
+              src={images4[currentImageIndex]}
+              alt=""
+              layout="responsive"
+            />
+            <Image
+              className="imageof"
+              borderRadius={"25px"}
+              width="290px"
+              height="180px"
+              src={images5[currentImageIndex]}
+              alt=""
+              layout="responsive"
             />
           </Box>
 
@@ -194,16 +196,15 @@ const App = () => {
             you can wander in an infinite universe.{" "}
           </Text>
           <Text
-              bgGradient="linear(to bottom, black, rgba(255, 55, 133, 0.7))"
-              bgClip="text"
-              fontSize="4xl"
-              mb={"0.5em"}
-              fontWeight="extrabold"
-            >
-              {sliderValue}
-            </Text>
+            bgGradient="linear(to bottom, black, rgba(255, 55, 133, 0.7))"
+            bgClip="text"
+            fontSize="4xl"
+            mb={"0.5em"}
+            fontWeight="extrabold"
+          >
+            {sliderValue}
+          </Text>
           <Flex w={500} marginBottom={50}>
-          
             <Slider
               id="slider"
               step={0.5}
@@ -241,7 +242,6 @@ const App = () => {
           </Flex>
 
           <Wrap marginBottom={"30px"}>
-
             <Input
               value={prompt}
               onChange={(e) => updatePrompt(e.target.value)}

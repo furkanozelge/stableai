@@ -1,0 +1,10 @@
+.imageof {
+    cursor: pointer;
+    transition: filter 0.3s ease; /* Add transition for smooth effect */
+  }
+  
+.imageof:hover {
+    transform: rotate(1deg); /* Adjust the rotation angle as desired */
+    filter: brightness(1.2);  
+    filter: blur(1px); /* Adjust the blur amount as desired */
+}
