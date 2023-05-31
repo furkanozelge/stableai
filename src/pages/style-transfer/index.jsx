@@ -48,13 +48,15 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://558b-34-87-72-126.ngrok-free.app/style-transfer";
+        const url = "https://905d-34-87-72-126.ngrok-free.app/style-transfer";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
         };
         console.log(base64Data);
-        console.log(example === 1 ? example1 : example === 2 ? example2 : example3)
+        console.log(
+          example === 1 ? example1 : example === 2 ? example2 : example3
+        );
         const response = await axios.post(
           url,
           {
@@ -99,7 +101,7 @@ const ImageUploader = () => {
         const base64Data2 = reader2.result.split(",")[1];
 
         try {
-          const url = "https://558b-34-87-72-126.ngrok-free.app/style-transfer";
+          const url = "https://905d-34-87-72-126.ngrok-free.app/style-transfer";
           const headers = {
             "content-type": "application/json",
             "ngrok-skip-browser-warning": "69420",
@@ -147,7 +149,6 @@ const ImageUploader = () => {
   return (
     <div>
       <Navbar />
-
       <Flex bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
         <Box
           mb={180}
@@ -183,8 +184,11 @@ const ImageUploader = () => {
               width={"250"}
               src="/example1.jpg"
               style={{
-                filter: example === 1 ? "brightness(1.5)" : "none",
+                filter: example === 1 ? "brightness(1.7)" : "opacity(95%)",
+                width : example === 1 ? "320px" : "300px",
+                height : example === 1 ? "320px" : "300px",
                 cursor: "pointer",
+                borderRadius:"20px",
               }}
             ></Image>
             <Image
@@ -193,8 +197,10 @@ const ImageUploader = () => {
               width={"400"}
               src="/example2.jpg"
               style={{
-                filter: example === 2 ? "brightness(1.5)" : "none",
-
+                filter: example === 2 ? "brightness(1.7)" : "opacity(95%)",
+                width : example === 2 ? "470px" : "450px",
+                height : example === 2 ? "320px" : "300px",
+                borderRadius:"20px",
                 cursor: "pointer",
               }}
             ></Image>
@@ -204,17 +210,32 @@ const ImageUploader = () => {
               width={"250"}
               src="/example3.jpg"
               style={{
-                filter: example === 3 ? "brightness(1.5)" : "none",
+                filter: example === 3 ? "brightness(1.7)" : "opacity(95%)",
+                width : example === 3 ? "320px" : "300px",
+                height : example === 3 ? "320px" : "300px",
                 cursor: "pointer",
+                borderRadius:"20px",
               }}
             ></Image>
           </Wrap>
-
           <Wrap marginTop={"30px"} marginBottom={"10px"}>
             <form onSubmit={handleImageUpload}>
               {example === 0 && (
                 <>
+                  <Text
+                    mt={"0.5em"}
+                    bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+                    bgClip="text"
+                    fontSize="2xl"
+                    mb={"0.5em"}
+                    maxW={550}
+                    fontWeight="extrabold"
+                  >
+                    Please upload two image or select one image and upload one
+                    image!
+                  </Text>
                   <Input
+                    w={550}
                     mt={"1em"}
                     alignContent={"center"}
                     display={"flex"}
@@ -223,6 +244,7 @@ const ImageUploader = () => {
                     onChange={handleImageSelect}
                   />
                   <Input
+                    w={550}
                     mt={"1em"}
                     alignContent={"center"}
                     display={"flex"}
@@ -244,12 +266,14 @@ const ImageUploader = () => {
                     bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
                     bgClip="text"
                     fontSize="2xl"
+                    maxW={550}
                     mb={"0.5em"}
                     fontWeight="extrabold"
                   >
-                    Please upload only one more photo!
+                    Please upload only one more image!
                   </Text>
                   <Input
+                    w={550}
                     mt={"1em"}
                     alignContent={"center"}
                     display={"flex"}

@@ -1,0 +1,20 @@
+.image {
+    cursor: pointer;
+    transition: filter 0.3s ease; /* Add transition for smooth effect */
+  }
+  
+  .image:hover {
+    transform: rotate(1deg); /* Adjust the rotation angle as desired */
+    filter: brightness(1.2);  
+    filter: blur(1px); /* Adjust the blur amount as desired */
+}
+
+  
+.separator {
+    width: 14px; /* Adjust the width of the separator line */
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adjust the shadow properties */
+  }
+  
+  
