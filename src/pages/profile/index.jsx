@@ -2,15 +2,16 @@ import React from 'react'
 import Image from 'next/image'
 import { Text, Flex, ButtonGroup,Button } from '@chakra-ui/react'
 import Navbar from "../../components/Navbar"
-import Cookies from 'js-cookie';
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getProfile } from './api';
-
+import { getProfile } from '../../../utils/api';
+import { cookies } from 'next/headers';
 function index() {
   const [profile, setProfile] = useState(null);
   const router = useRouter();
-  const token = Cookies.get('token'); // JWT token'ını çerezden al
+  const token = cookies.get('token');
+
   useEffect(() => {
     if (!token) {
       router.push('/login');
