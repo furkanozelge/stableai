@@ -23,13 +23,13 @@ const Testimonials = () => {
     },
     {
       id: 4,
-      content: '3D Cartoon Model.',
+      content: '3D Cartoon Model, A girl is laughing with pijamas.',
       position: 'StableAI',
       image: 'https://preview.redd.it/mwzt72g1p73b1.png?width=960&crop=smart&auto=webp&v=enabled&s=a6ffe7bc2360d29013c71f1b3bc9dbddf1342e3a',
     },
     {
       id: 5,
-      content: 'A digital illustration of a steampunk flying machine in the sky with cogs and mechanisms, 4k, detailed, trending in artstation, fantasy vivid colors.',
+      content: 'A digital illustration of a steampunk flying machine in the sky with cogs and mechanisms.',
       position: 'StableAI',
       image: 'https://strikingloo.github.io/resources/ai-generated-images/stable-diffusion/selected/1113348597__A_digital_illustration_of_a_steampunk_flying_machine_in_the_sky_with_cogs_and_mechanisms__4k__detailed__trending_in_artstation__fantasy_vivid_colors_.png',
     },
@@ -42,7 +42,7 @@ const Testimonials = () => {
   };
 
   return (
-    <Box  display="flex" justifyContent="center" alignItems="center">
+    <Box display="flex" justifyContent="center" alignItems="center">
       {testimonials.map((testimonial, index) => (
         <Box
           key={testimonial.id}
@@ -59,16 +59,24 @@ const Testimonials = () => {
           color="white"
           p="6"
           w="300px"
-          boxShadow={activeIndex === index ? '0px 8px 15px rgba(0, 0, 0, 0.3)' : '0px 2px 5px rgba(0, 0, 0, 0.1)'}
+          h={activeIndex === index ? '380px' : '320px'}
         >
-          <Text fontSize="xl" fontWeight="bold" mb="4">
+          <Text mt={1}fontSize="md" fontWeight="bold" mb="7">
             {testimonial.content}
           </Text>
-          <Image src={testimonial.image} alt={testimonial.author} borderRadius="full" boxSize="200px"  mx="auto" transform={activeIndex === index ? 'scale(1.1)' : 'scale(1.05)'} transition="transform 0.3s" />
+          <Image
+            src={testimonial.image}
+            alt={testimonial.author}
+            borderRadius="full"
+            boxSize={activeIndex === index ? '200px' : '180px'}
+            mx="auto"
+            transform={activeIndex === index ? 'scale(1.1)' : 'scale(1.05)'}
+            transition="transform 0.3s"
+          />
           <Text mt="4" fontWeight="bold">
             {testimonial.author}
           </Text>
-          <Text>{testimonial.position}</Text>
+          
         </Box>
       ))}
     </Box>
