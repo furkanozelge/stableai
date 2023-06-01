@@ -20,7 +20,7 @@ import {
 import { signUp } from '../../../utils/api';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Navbar from "../../components/Navbar"
+import UnNavbar from "../../components/UnNavbar"
 import { ViewIcon,ViewOffIcon } from '@chakra-ui/icons';
 
 const avatars = [
@@ -78,7 +78,7 @@ export default function JoinOurTeam() {
 
   return (
     <>
-    <Navbar />
+    <UnNavbar />
     <Box position={'relative'}>
       <Container
         as={SimpleGrid}

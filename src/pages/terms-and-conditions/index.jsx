@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
+import UnNavbar from "../../components/UnNavbar";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Flex, ButtonGroup, Button, Box, Text } from "@chakra-ui/react";
@@ -9,7 +9,7 @@ function index() {
 
   return (
     <>
-      <Navbar />
+      <UnNavbar />
       <Flex bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
         <Box
           m={50}

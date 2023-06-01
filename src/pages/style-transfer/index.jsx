@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import { image1Base64 } from "./base64-1";
 import { image2Base64 } from "./base64-2";
+import router from "next/router";
 import { image3Base64 } from "./base64-3";
-
+import Cookies from "js-cookie";
 import {
   Flex,
   Box,
@@ -19,6 +20,16 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 const ImageUploader = () => {
+  const token = Cookies.get("access_token");
+  useEffect(() => {
+    if (!token) {
+      router.push("/sign-in");
+    }
+  }, [token, router]);
+
+  if (!token) {
+    return <div>Loading...</div>;
+  }
   const example1 = image1Base64;
   const example2 = image2Base64;
   const example3 = image3Base64;

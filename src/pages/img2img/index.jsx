@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Flex,
   Stack,
@@ -22,9 +22,21 @@ import {
 import Image from "next/image";
 import axios from "axios";
 import Footer from "../../components/Footer";
+import router from "next/router";
 import Navbar from "../../components/Navbar";
+import Cookies from "js-cookie";
 
 const ImageUploader = () => {
+  const token = Cookies.get("access_token");
+  useEffect(() => {
+    if (!token) {
+      router.push("/sign-in");
+    }
+  }, [token, router]);
+
+  if (!token) {
+    return <div>Loading...</div>;
+  }
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

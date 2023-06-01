@@ -20,6 +20,7 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useState } from "react";
 import Navbar from "../../components/Navbar";
+import UnNavbar from "../../components/UnNavbar";
 import { useRouter } from "next/router";
 import { login } from "../../../utils/api";
 
@@ -94,7 +95,7 @@ export default function JoinOurTeam() {
 
   return (
     <>
-      <Navbar />
+      <UnNavbar />
       <Box position={"relative"}>
         <Container
           as={SimpleGrid}

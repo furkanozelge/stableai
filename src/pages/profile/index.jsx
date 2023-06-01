@@ -10,6 +10,7 @@ import { getProfile } from '../../../utils/api';
 import Cookies from 'js-cookie';
 
 function ProfilePage() {
+  
   const [profile, setProfile] = useState(null);
   const [activeTab, setActiveTab] = useState('my-arts');
   const router = useRouter();
@@ -17,7 +18,7 @@ function ProfilePage() {
 
   useEffect(() => {
     if (!token) {
-      router.push('/login');
+      router.push('/sign-in');
       return;
     }
 

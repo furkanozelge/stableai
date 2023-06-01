@@ -28,6 +28,8 @@ import Navbar from "../../components/Navbar";
 import { MdDownload } from "react-icons/md";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import router from "next/router";
+import Cookies from "js-cookie";
 import Footer from "../../components/Footer";
 
 const App = () => {
@@ -110,6 +112,16 @@ const App = () => {
     updateImage(result.data);
     updateLoading(false);
   };
+  const token = Cookies.get("access_token");
+  useEffect(() => {
+    if (!token) {
+      router.push("/sign-in");
+    }
+  }, [token, router]);
+
+  if (!token) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <ChakraProvider>

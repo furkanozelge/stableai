@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 
 import HomePage from "../components/HomePage"
-import Navbar from "../components/Navbar"
+import UnNavbar from "../components/UnNavbar"
 import { ButtonGroup } from '@chakra-ui/react'
 import Footer from '../components/Footer'
 
@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <>  
-        <Navbar />
+        <UnNavbar />
         <HomePage />
         <Footer />
     </>
