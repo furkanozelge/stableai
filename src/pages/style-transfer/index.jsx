@@ -171,7 +171,7 @@ const ImageUploader = () => {
           textAlign="center"
         >
           <Text
-            bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+            bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
             bgClip="text"
             fontSize="6xl"
             mb={"0.5em"}
@@ -235,7 +235,7 @@ const ImageUploader = () => {
                 <>
                   <Text
                     mt={"0.5em"}
-                    bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+                    bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
                     bgClip="text"
                     fontSize="2xl"
                     mb={"0.5em"}
@@ -264,7 +264,7 @@ const ImageUploader = () => {
                     onChange={handleImageSelect2}
                   />
                   <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
-                    Upload Image
+                  Generate Image
                   </Button>
                 </>
               )}
@@ -274,7 +274,7 @@ const ImageUploader = () => {
                 <form onSubmit={handleOneImage}>
                   <Text
                     mt={"0.5em"}
-                    bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+                    bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
                     bgClip="text"
                     fontSize="2xl"
                     maxW={550}
@@ -293,13 +293,13 @@ const ImageUploader = () => {
                     onChange={handleImageSelect}
                   />
                   <Button mt={"2em"} colorScheme={"blackAlpha"} type="submit">
-                    Upload Image
+                    Generate Image
                   </Button>
                 </form>
               </>
             )}
-
-            {isLoading && (
+          </Wrap>
+          {isLoading && (
               <Stack mt={6}>
                 <Text fontSize={"xl"} color={"black"}>
                   Loading...
@@ -308,7 +308,6 @@ const ImageUploader = () => {
                 <SkeletonText />
               </Stack>
             )}
-          </Wrap>
           {uploadedImage && (
             <Flex
               display="flex"

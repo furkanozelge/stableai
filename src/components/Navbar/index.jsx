@@ -21,7 +21,7 @@ function LoggedInNavbar() {
     <Box>
       <Flex align="center" bg="black" justifyContent="space-between">
         <Box ml={5}>
-          <img src="/logo.png" alt="Logo" width={130} height={130} onClick={() => router.push('/')} style={{ cursor: 'pointer' }} />
+          <img src="/logo.png" alt="Logo" width={130} height={130} onClick={() => router.push('/feed')} style={{ cursor: 'pointer' }} />
         </Box>
         <Flex align="center">
           <Button

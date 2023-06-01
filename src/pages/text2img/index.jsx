@@ -122,7 +122,6 @@ const App = () => {
   if (!token) {
     return <div>Loading...</div>;
   }
-
   return (
     <ChakraProvider>
       <Navbar></Navbar>
@@ -138,7 +137,7 @@ const App = () => {
           textAlign="center"
         >
           <Text
-            bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+            bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
             bgClip="text"
             fontSize="6xl"
             mb={"0.5em"}
@@ -200,15 +199,16 @@ const App = () => {
               layout="responsive"
             />
           </Box>
-
-          <Text fontSize="2xl" textColor={"black"} marginBottom={"10px"}>
+          <Flex>
+          <Text fontSize="2xl" textColor={"whiteAlpha.700"} marginBottom={"10px"}>
             In this magical page, your dreams come true! Every thought sprouting
             from your inner world turns into a visual spectacle here. In this
             place, limited only by your imagination, you will discover how far
             you can wander in an infinite universe.{" "}
           </Text>
+          </Flex>
           <Text
-            bgGradient="linear(to bottom, black, rgba(255, 55, 133, 0.7))"
+            bgGradient="linear(to top, #800b80, #7303c0)"
             bgClip="text"
             fontSize="4xl"
             mb={"0.5em"}

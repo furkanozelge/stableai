@@ -112,7 +112,7 @@ const ImageUploader = () => {
           textAlign="center"
         >
           <Text
-            bgGradient="linear(to right, black, rgba(255, 55, 133, 0.7))"
+            bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
             bgClip="text"
             fontSize="6xl"
             mb={"0.5em"}
