@@ -39,13 +39,17 @@ const avatars = [
 ];
 
 export default function JoinOurTeam() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [grant_type,setgrant_type] = useState('');
+  const [scope,setScope] = useState('');
+  const [client_id,setclient_id] = useState('');
+  const [client_secret,setclient_secret] = useState('');
   const router = useRouter();
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'email') {
-      setEmail(value);
+    if (name === 'username') {
+      setUsername(value);
     } else if (name === 'password') {
       setPassword(value);
     }
@@ -53,9 +57,16 @@ export default function JoinOurTeam() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const credentials = { email, password };
+      console.log(username,password)
+      const credentials = new URLSearchParams();
+      credentials.append('grant_type', '');
+      credentials.append('username', username); // Kullanıcı adınızı buraya ekleyin
+      credentials.append('password', password); // Şifrenizi buraya ekleyin
+      credentials.append('scope', '');
+      credentials.append('client_id', '');
+      credentials.append('client_secret', '');
+
       const response = await login(credentials);
       const { token } = response;
       Cookies.set('token', token); 
@@ -164,12 +175,11 @@ export default function JoinOurTeam() {
             <Stack spacing={4}>
               
               <Input
-                placeholder="mail@sample.com"
-                value={email}
-                
+                placeholder="Username"
+                value={username}
                 bg={'gray.100'}
-                onChange={(e)=> setEmail(e.target.value)}
-                name="email"
+                onChange={(e)=> setUsername(e.target.value)}
+                name="username"
                 border={0}
                 color={'gray.500'}
                 _placeholder={{

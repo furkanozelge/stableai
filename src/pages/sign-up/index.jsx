@@ -52,7 +52,7 @@ export default function JoinOurTeam() {
     try {
       const userData = { name,surname,username,profilpicture,email, password };
       await signUp(userData);
-      router.push('/login');
+      
     } catch (error) {
       console.error(error);
     }
