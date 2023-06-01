@@ -22,7 +22,7 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/router";
 import { login } from "../../../utils/api";
-import { cookies } from 'next/headers';
+
 
 
 
@@ -46,8 +46,6 @@ const avatars = [
 ];
 
 export default function JoinOurTeam() {
-  const cookieStore = cookies();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [grant_type, setgrant_type] = useState("");
@@ -82,8 +80,8 @@ export default function JoinOurTeam() {
       credentials.append("client_secret", "");
 
       const response = await login(credentials);
-      const { token } = response;
-      cookieStore.set('token', token);
+      const { access_token } = response;
+      localStorage.setItem('access_token', access_token);
       setError("");
       router.push("/profile");
     } catch (error) {
