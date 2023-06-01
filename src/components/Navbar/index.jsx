@@ -29,17 +29,17 @@ function Navbar() {
           <>
             <Flex align="center">
               <Button
-                onClick={() => handleButtonClick('/feed')}
+                onClick={() => handleButtonClick('/')}
                 mr={2}
                 color="#000000"
                 bg="#b28afd"
                 size="md"
                 leftIcon={<FiHome />}
               >
-                Feed
+                Home
               </Button>
               <Button
-                onClick={() => handleButtonClick('/generate')}
+                onClick={() => handleButtonClick('/feed')}
                 mr={2}
                 color="#000000"
                 bg="#b28afd"
@@ -58,7 +58,7 @@ function Navbar() {
               >
                 Profile
               </Button>
-              <Button onClick={handleLogout} mr={2} color="#000000" bg="red" size="md" leftIcon={<FiLogOut />}>
+              <Button onClick={handleLogout} mr={2} color="#000000" bg="pink.300" size="md" leftIcon={<FiLogOut />}>
                 Log Out
               </Button>
             </Flex>
