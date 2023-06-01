@@ -59,7 +59,7 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://b5ed-34-87-72-126.ngrok-free.app/style-transfer";
+        const url = "https://3732-34-126-189-80.ngrok-free.app/style-transfer";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
@@ -112,7 +112,7 @@ const ImageUploader = () => {
         const base64Data2 = reader2.result.split(",")[1];
 
         try {
-          const url = "https://b5ed-34-87-72-126.ngrok-free.app/style-transfer";
+          const url = "https://3732-34-126-189-80.ngrok-free.app/style-transfer";
           const headers = {
             "content-type": "application/json",
             "ngrok-skip-browser-warning": "69420",

@@ -106,7 +106,7 @@ const App = () => {
   const generate = async (prompt) => {
     updateLoading(true);
     const result = await axios.get(
-      `https://ed3c-34-87-72-126.ngrok-free.app/?prompt=${prompt}&scale=${sliderValue}`,
+      `https://3732-34-126-189-80.ngrok-free.app/?prompt=${prompt}&scale=${sliderValue}`,
       { headers: { "ngrok-skip-browser-warning": "69420" } }
     );
     updateImage(result.data);

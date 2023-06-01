@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MdCheckCircle } from "react-icons/md";
 import {SiGnuprivacyguard} from "react-icons/si"
 import { Flex, Text, Box, Button } from "@chakra-ui/react";
+import Cards from "../Cards"
 import { Router, useRouter } from "next/router";
 function index() {
   const router = useRouter();
@@ -53,6 +54,7 @@ function index() {
             >
               Join Us!
             </Button>
+            <Cards />
           </Box>
         </Flex>
       </Flex>
