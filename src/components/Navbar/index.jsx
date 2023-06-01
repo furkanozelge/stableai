@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Flex, Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
+import { FiHome, FiActivity, FiUser, FiLogOut, FiPlayCircle } from 'react-icons/fi';
 import Cookies from 'js-cookie';
 
 function Navbar() {
@@ -33,6 +34,7 @@ function Navbar() {
                 color="#000000"
                 bg="#b28afd"
                 size="md"
+                leftIcon={<FiHome />}
               >
                 Feed
               </Button>
@@ -42,6 +44,7 @@ function Navbar() {
                 color="#000000"
                 bg="#b28afd"
                 size="md"
+                leftIcon={<FiActivity />}
               >
                 Generate
               </Button>
@@ -51,10 +54,11 @@ function Navbar() {
                 color="#000000"
                 bg="#b28afd"
                 size="md"
+                leftIcon={<FiUser />}
               >
                 Profile
               </Button>
-              <Button onClick={handleLogout} mr={2} color="#000000" bg="red" size="md">
+              <Button onClick={handleLogout} mr={2} color="#000000" bg="red" size="md" leftIcon={<FiLogOut />}>
                 Log Out
               </Button>
             </Flex>
@@ -66,6 +70,7 @@ function Navbar() {
             color="#000000"
             bg="#b28afd"
             size="md"
+            leftIcon={<FiPlayCircle />}
           >
             Start Now
           </Button>
