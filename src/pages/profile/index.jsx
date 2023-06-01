@@ -6,11 +6,11 @@ import Navbar from "../../components/Navbar"
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getProfile } from '../../../utils/api';
-
+import Cookies from 'js-cookie';
 function index() {
   const [profile, setProfile] = useState(null);
   const router = useRouter();
-  const token = localStorage.getItem('access_token');
+  const token = Cookies.get('access_token');
 
 
   useEffect(() => {

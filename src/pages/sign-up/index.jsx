@@ -50,6 +50,8 @@ export default function JoinOurTeam() {
   const [profilpicture, setProfilpicture] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [formError, setFormError] = useState('');
+
   const router = useRouter();
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -57,11 +59,18 @@ export default function JoinOurTeam() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!username || !email || !password) {
+      setFormError('Please fill in all fields.');
+      return;
+    }
+    if (password.length < 5) {
+      setFormError('Password should be at least 5 characters long.');
+      return;
+    }
     try {
       const userData = { name,surname,username,profilpicture,email, password };
       await signUp(userData);
-      
+      router.push("/sign-in")
     } catch (error) {
       console.error(error);
     }
@@ -162,6 +171,9 @@ export default function JoinOurTeam() {
             Join our community and create an account today to access exclusive content and resources.
             </Text>
           </Stack>
+
+              
+              {formError && <Text color="red.500">{formError}</Text>}
          
           <Box as={'form'} mt={10}>
             <Stack spacing={4}>

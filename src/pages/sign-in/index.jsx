@@ -23,6 +23,7 @@ import Navbar from "../../components/Navbar";
 import { useRouter } from "next/router";
 import { login } from "../../../utils/api";
 
+import Cookies from 'js-cookie';
 
 
 
@@ -82,6 +83,7 @@ export default function JoinOurTeam() {
       const response = await login(credentials);
       const { access_token } = response;
       localStorage.setItem('access_token', access_token);
+      Cookies.set('access_token', access_token);
       setError("");
       router.push("/profile");
     } catch (error) {
