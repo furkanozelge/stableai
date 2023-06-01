@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Text, Image } from '@chakra-ui/react';
 
 const Testimonials = () => {
@@ -37,12 +37,22 @@ const Testimonials = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    }, 7000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   const handleClick = (index) => {
     setActiveIndex(index);
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center">
+    <Box display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
       {testimonials.map((testimonial, index) => (
         <Box
           key={testimonial.id}
@@ -51,7 +61,7 @@ const Testimonials = () => {
           transform={activeIndex === index ? 'scale(1.1)' : 'scale(1)'}
           transition="transform 0.3s"
           onClick={() => handleClick(index)}
-          bgGradient="linear(to bottom, #8A2387, #f953c6, #f64f59)"
+          bgGradient="linear(to bottom, #9A2187, #f953c6, purple.400)"
           borderRadius="lg"
           mt={10}
           overflow="hidden"
@@ -60,8 +70,12 @@ const Testimonials = () => {
           p="6"
           w="300px"
           h={activeIndex === index ? '380px' : '320px'}
+          _hover={{
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.3)',
+          }}
+          display={activeIndex === index || window.innerWidth >= 320 ? 'block' : 'none'}
         >
-          <Text mt={1}fontSize="md" fontWeight="bold" mb="7">
+          <Text mt={1} fontSize="md" fontWeight="bold" mb="7">
             {testimonial.content}
           </Text>
           <Image
@@ -73,10 +87,6 @@ const Testimonials = () => {
             transform={activeIndex === index ? 'scale(1.1)' : 'scale(1.05)'}
             transition="transform 0.3s"
           />
-          <Text mt="4" fontWeight="bold">
-            {testimonial.author}
-          </Text>
-          
         </Box>
       ))}
     </Box>
