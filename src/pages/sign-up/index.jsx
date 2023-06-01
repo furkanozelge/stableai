@@ -10,6 +10,9 @@ import {
   SimpleGrid,
   Avatar,
   AvatarGroup,
+  InputGroup,
+  InputRightElement,
+  IconButton,
   useBreakpointValue,
   IconProps,
   Icon,
@@ -18,6 +21,7 @@ import { signUp } from '../../../utils/api';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Navbar from "../../components/Navbar"
+import { ViewIcon,ViewOffIcon } from '@chakra-ui/icons';
 
 const avatars = [
   {
@@ -39,6 +43,7 @@ const avatars = [
 ];
 
 export default function JoinOurTeam() {
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -46,6 +51,10 @@ export default function JoinOurTeam() {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const router = useRouter();
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -178,8 +187,10 @@ export default function JoinOurTeam() {
                   color: 'gray.500',
                 }}
               />
+              <InputGroup>
               <Input
                 placeholder="Password"
+                type={showPassword ? "text" : "password"}
                 bg={'gray.100'}
                 border={0}
                 color={'gray.500'}
@@ -189,6 +200,16 @@ export default function JoinOurTeam() {
                   color: 'gray.500',
                 }}
               />
+              <InputRightElement width="4.5rem">
+                    <IconButton
+                      h="1.75rem"
+                      size="sm"
+                      onClick={handleTogglePassword}
+                      icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                      variant="ghost"
+                    />
+                  </InputRightElement>
+                  </InputGroup>
             </Stack>
             <Button
               fontFamily={'heading'}
