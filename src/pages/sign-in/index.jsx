@@ -14,8 +14,11 @@ import {
   IconProps,
   Icon,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import Navbar from "../../components/Navbar"
 import { useRouter } from 'next/router';
+import { login } from '../../../utils/api';
+
 const avatars = [
   {
     name: 'Furkan Özelge',
@@ -36,7 +39,32 @@ const avatars = [
 ];
 
 export default function JoinOurTeam() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const credentials = { email, password };
+      const response = await login(credentials);
+      const { token } = response;
+      Cookies.set('token', token); 
+      router.push('/profile');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
     <Navbar />
@@ -131,11 +159,17 @@ export default function JoinOurTeam() {
             <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
             Welcome back! Please enter your login credentials to access your account.</Text>
           </Stack>
+          
           <Box as={'form'} mt={10}>
             <Stack spacing={4}>
+              
               <Input
                 placeholder="mail@sample.com"
+                value={email}
+                
                 bg={'gray.100'}
+                onChange={(e)=> setEmail(e.target.value)}
+                name="email"
                 border={0}
                 color={'gray.500'}
                 _placeholder={{
@@ -146,12 +180,14 @@ export default function JoinOurTeam() {
                 placeholder="Password"
                 bg={'gray.100'}
                 border={0}
+                onChange={(e)=> setPassword(e.target.value)}
+                name="password"
                 color={'gray.500'}
                 _placeholder={{
                   color: 'gray.500',
                 }}
               />
-              <Button onClick={()=>{router.push("/feed")}} fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
+              <Button onClick={handleSubmit} fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
                 Log In!
               </Button>
             </Stack>
@@ -169,7 +205,7 @@ export default function JoinOurTeam() {
               Join Us!
             </Button>
           </Box>
-          form
+         
         </Stack>
       </Container>
 

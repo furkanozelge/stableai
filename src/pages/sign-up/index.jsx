@@ -14,6 +14,9 @@ import {
   IconProps,
   Icon,
 } from '@chakra-ui/react';
+import { signUp } from '../../../utils/api';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Navbar from "../../components/Navbar"
 
 const avatars = [
@@ -36,6 +39,25 @@ const avatars = [
 ];
 
 export default function JoinOurTeam() {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [profilpicture, setProfilpicture] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const router = useRouter();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userData = { name,surname,username,profilpicture,email, password };
+      await signUp(userData);
+      router.push('/login');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
     <Navbar />
@@ -131,10 +153,13 @@ export default function JoinOurTeam() {
             Join our community and create an account today to access exclusive content and resources.
             </Text>
           </Stack>
+         
           <Box as={'form'} mt={10}>
             <Stack spacing={4}>
-            <Input
-                placeholder="Nickname"
+              <Input
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 bg={'gray.100'}
                 border={0}
                 color={'gray.500'}
@@ -145,6 +170,8 @@ export default function JoinOurTeam() {
               <Input
                 placeholder="mail@sample.com"
                 bg={'gray.100'}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 border={0}
                 color={'gray.500'}
                 _placeholder={{
@@ -156,6 +183,8 @@ export default function JoinOurTeam() {
                 bg={'gray.100'}
                 border={0}
                 color={'gray.500'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 _placeholder={{
                   color: 'gray.500',
                 }}
@@ -164,7 +193,9 @@ export default function JoinOurTeam() {
             <Button
               fontFamily={'heading'}
               mt={8}
+              type='submit'
               w={'full'}
+              onClick={handleSubmit}
               bgGradient="linear(to-r, purple.400,pink.400)"
               color={'white'}
               _hover={{
@@ -174,7 +205,7 @@ export default function JoinOurTeam() {
               Join Us!
             </Button>
           </Box>
-          form
+         
         </Stack>
       </Container>
 

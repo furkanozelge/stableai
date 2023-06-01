@@ -2,7 +2,37 @@ import React from 'react'
 import Image from 'next/image'
 import { Text, Flex, ButtonGroup,Button } from '@chakra-ui/react'
 import Navbar from "../../components/Navbar"
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { getProfile } from './api';
+
 function index() {
+  const [profile, setProfile] = useState(null);
+  const router = useRouter();
+  const token = Cookies.get('token'); // JWT token'ını çerezden al
+  useEffect(() => {
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
+    const fetchProfile = async () => {
+      try {
+        const response = await getProfile(token);
+        setProfile(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfile();
+  }, [token, router]);
+
+  if (!profile) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
     <Navbar></Navbar>
@@ -13,7 +43,7 @@ function index() {
         width={150}
         height={150}
       /> 
-    <Text>Nickname</Text>
+    <Text>{profile.email}</Text>
     <ButtonGroup>
       <Button>My Arts</Button>
       <Button>Bookmarks</Button>
