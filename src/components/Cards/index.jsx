@@ -73,7 +73,7 @@ const Testimonials = () => {
           _hover={{
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.3)',
           }}
-          display={activeIndex === index || window.innerWidth >= 320 ? 'block' : 'none'}
+          display={activeIndex === index}
         >
           <Text mt={1} fontSize="md" fontWeight="bold" mb="7">
             {testimonial.content}

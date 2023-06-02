@@ -58,7 +58,7 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://3732-34-126-189-80.ngrok-free.app/image2image";
+        const url = "https://dc57-34-67-32-138.ngrok-free.app/image2image";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",

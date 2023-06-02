@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://a6d0-178-233-24-227.ngrok-free.app';
+const API_BASE_URL = 'https://07c2-95-183-240-91.ngrok-free.app';
 
 const headers = {
   'ngrok-skip-browser-warning': '69420',
