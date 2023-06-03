@@ -151,7 +151,15 @@ const App = () => {
   }, [token, router]);
 
   if (!profile) {
-    return <div>Loading...</div>;
+    return (
+      <Flex direction="column" minH="100vh">
+        <Navbar />
+        <Flex flex={1} justify="center" align="center">
+          <Spinner size="xl" color="purple.500" />
+        </Flex>
+        <Footer />
+      </Flex>
+    );
   }
   
   
@@ -170,13 +178,14 @@ const App = () => {
           textAlign="center"
         >
             <Text
-            bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
+            bgColor={"blackAlpha.500"}
+            as="i"
             bgClip="text"
-            fontSize="6xl"
+            fontSize="2xl"
             mb={"0.5em"}
             fontWeight="extrabold"
           >
-            {profile.email}
+           Welcome {profile.email}!
           </Text>
           <Text
             bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
