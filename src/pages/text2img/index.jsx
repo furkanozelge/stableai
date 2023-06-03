@@ -25,7 +25,8 @@ import {
 import { motion } from "framer-motion";
 import styles from "./style.module.css";
 import Navbar from "../../components/Navbar";
-import { MdDownload } from "react-icons/md";
+import { getProfile } from '../../../utils/api';
+import { MdBookmark } from "react-icons/md";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import router from "next/router";
@@ -97,35 +98,67 @@ const App = () => {
 
     return () => clearInterval(interval);
   }, []);
+  const [profile, setProfile] = useState(null);
   const [imageSrc, setImageSrc] = useState("");
   const [image, updateImage] = useState();
   const [prompt, updatePrompt] = useState();
   const [loading, updateLoading] = useState();
+  const token = Cookies.get("access_token");
   const [sliderValue, setSliderValue] = useState(8.5);
   const [showTooltip, setShowTooltip] = useState(false);
   const generate = async (prompt) => {
     updateLoading(true);
     const result = await axios.get(
-      `https://f772-35-184-235-218.ngrok-free.app/?prompt=${prompt}&scale=${sliderValue}`,
+      `https://28b3-34-87-54-247.ngrok-free.app/?prompt=${prompt}&scale=${sliderValue}`,
       { headers: { "ngrok-skip-browser-warning": "69420" } }
     );
     updateImage(result.data);
     updateLoading(false);
   };
-  const token = Cookies.get("access_token");
+  
+
+  const handleBookmark = async () => {
+    updateLoading(true);
+    try {
+      const postData = {
+        mail: profile.email,
+        prompt: prompt,
+        image: image,
+      };
+      const response = await axios.post('https://39b3-178-233-24-227.ngrok-free.app/share', postData,{ headers: { "ngrok-skip-browser-warning": "69420" } });
+      console.log(response)
+    } catch (error) {
+      console.error('İstek gönderilirken bir hata oluştu:', error);
+    }
+    updateLoading(false);
+  };
   useEffect(() => {
     if (!token) {
-      router.push("/sign-in");
+      router.push('/sign-in');
+      return;
     }
+
+    const fetchProfile = async () => {
+      try {
+        const response = await getProfile(token);
+        setProfile(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfile();
   }, [token, router]);
 
-  if (!token) {
+  if (!profile) {
     return <div>Loading...</div>;
   }
+  
+  
   return (
     <ChakraProvider>
       <Navbar></Navbar>
-
+      
       <Flex bgGradient="linear(to bottom, rgba(139, 0, 255, 0.7), rgba(199, 21, 133, 0.7))">
         <Box
           mb={180}
@@ -136,6 +169,15 @@ const App = () => {
           justifyContent="center"
           textAlign="center"
         >
+            <Text
+            bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
+            bgClip="text"
+            fontSize="6xl"
+            mb={"0.5em"}
+            fontWeight="extrabold"
+          >
+            {profile.email}
+          </Text>
           <Text
             bgGradient="linear(to right, #D3DDE3, #E9E9F0)"
             bgClip="text"
@@ -279,8 +321,9 @@ const App = () => {
           ) : image ? (
             <>
               <Image src={`data:image/png;base64,${image}`} boxShadow="lg" />
-              <Text>You can download your art!</Text>
-              <MdDownload onClick={downloadImage} size={50}></MdDownload>
+              <Text>You can bookmark your art!</Text>
+              <MdBookmark size={100} onClick={handleBookmark}></MdBookmark>
+              
             </>
           ) : null}
         </Box>
