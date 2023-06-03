@@ -7,6 +7,7 @@ import {
   SkeletonCircle,
   Slider,
   SliderMark,
+  Spinner,
   SliderFilledTrack,
   SliderProps,
   SliderThumb,
@@ -19,33 +20,45 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
+import { MdBookmark } from "react-icons/md";
 import Image from "next/image";
 import axios from "axios";
 import Footer from "../../components/Footer";
 import router from "next/router";
 import Navbar from "../../components/Navbar";
+
+import { getProfile } from '../../../utils/api';
 import Cookies from "js-cookie";
 
 const ImageUploader = () => {
   const token = Cookies.get("access_token");
-  useEffect(() => {
-    if (!token) {
-      router.push("/sign-in");
-    }
-  }, [token, router]);
-
-  if (!token) {
-    return <div>Loading...</div>;
-  }
+  const [profile, setProfile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [sliderValue, setSliderValue] = useState(8.5);
+  const [loading, updateLoading] = useState();
   const [showTooltip, setShowTooltip] = useState(false);
   const [prompt, setPrompt] = useState("");
-  const sliderToFloat = () => {
-    const floatValue = parseFloat(sliderValue);
-  }
+  
+
+
+  const handleBookmark = async () => {
+    updateLoading(true);
+    try {
+      const postData = {
+        mail: profile.email,
+        prompt: prompt,
+        image: uploadedImage,
+      };
+      const response = await axios.post('https://39b3-178-233-24-227.ngrok-free.app/share', postData,{ headers: { "ngrok-skip-browser-warning": "69420" } });
+      console.log(response)
+    } catch (error) {
+      console.error('İstek gönderilirken bir hata oluştu:', error);
+    }
+    updateLoading(false);
+  };
+
   const handleImageUpload = async (event) => {
     event.preventDefault();
 
@@ -58,7 +71,7 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://f772-35-184-235-218.ngrok-free.app/image2image";
+        const url = "https://28b3-34-87-54-247.ngrok-free.app/image2image";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
@@ -96,6 +109,39 @@ const ImageUploader = () => {
     const file = event.target.files[0];
     setSelectedImage(file);
   };
+  useEffect(() => {
+    if (!token) {
+      router.push('/sign-in');
+      return;
+    }
+    
+    const fetchProfile = async () => {
+      try {
+        const response = await getProfile(token);
+        console.log(response.data)
+        console.log(response)
+        setProfile(response);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfile();
+  }, [token, router]);
+
+  if (!profile) {
+    return (
+     
+      <Flex direction="column" minH="100vh">
+        <Navbar />
+        <Flex flex={1} justify="center" align="center">
+          <Spinner size="xl" color="purple.500" />
+        </Flex>
+        <Footer />
+      </Flex>
+    );
+  }
 
   return (
     <div>
@@ -239,6 +285,8 @@ const ImageUploader = () => {
                   src={`data:image/jpeg;base64, ${uploadedImage}`}
                   alt="Uploaded"
                 />
+                <Text>You can bookmark your art!</Text>
+                <MdBookmark size={100} onClick={handleBookmark}></MdBookmark>
               </Box>
             </Flex>
           )}

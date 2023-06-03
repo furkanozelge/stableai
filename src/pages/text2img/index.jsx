@@ -9,6 +9,7 @@ import {
   Slider,
   SliderMark,
   SliderTrack,
+  Spinner,
   SliderFilledTrack,
   Tooltip,
   Button,
@@ -74,21 +75,7 @@ const App = () => {
     "https://i.pcmag.com/imagery/articles/009eKY0vyQqiSfEUCJhq225-1..v1666985690.png",
     "https://petapixel.com/assets/uploads/2023/03/image5-800x422.jpg",
   ];
-  const images6 = [
-    "https://www.assemblyai.com/blog/content/images/2022/11/image.png",
-    "https://cdn.mos.cms.futurecdn.net/xsZxBwtXNd5tdDmXRLj7e5.jpg",
-    "https://openaimaster.com/wp-content/uploads/2023/03/AI-Like-Midjourney-But-Free.jpg",
-    "https://miro.medium.com/v2/resize:fit:768/1*uuEbSnjmJ1LOuoWDa-nolA.jpeg",
-    "https://pbs.twimg.com/media/FasS6uEUEAEGA7r.jpg:large",
-    "https://petapixel.com/assets/uploads/2023/03/image5-800x422.jpg",
-  ];
 
-  const downloadImage = () => {
-    const link = document.createElement("a");
-    link.href = imageSrc;
-    link.download = "stableai.jpg";
-    link.click();
-  };
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {

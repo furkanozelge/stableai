@@ -75,8 +75,8 @@ export default function JoinOurTeam() {
       console.log(username, password);
       const credentials = new URLSearchParams();
       credentials.append("grant_type", "");
-      credentials.append("username", username); // Kullanıcı adınızı buraya ekleyin
-      credentials.append("password", password); // Şifrenizi buraya ekleyin
+      credentials.append("username", username); 
+      credentials.append("password", password); 
       credentials.append("scope", "");
       credentials.append("client_id", "");
       credentials.append("client_secret", "");

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Button } from '@chakra-ui/react';
-import { FiHome, FiActivity, FiUser, FiLogOut } from 'react-icons/fi';
+import { FiHome,FiSearch, FiActivity, FiUser, FiLogOut } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
@@ -25,14 +25,14 @@ function LoggedInNavbar() {
         </Box>
         <Flex align="center">
           <Button
-            onClick={() => handleButtonClick('/feed')}
+            onClick={() => handleButtonClick('/explore')}
             mr={2}
             color="#000000"
             bg="#b28afd"
             size="md"
-            leftIcon={<FiHome />}
+            leftIcon={<FiSearch />}
           >
-            Home
+            Explore
           </Button>
           <Button
             onClick={() => handleButtonClick('/feed')}

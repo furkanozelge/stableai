@@ -21,7 +21,7 @@ import Footer from "../../components/Footer";
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
-  const [activeTab, setActiveTab] = useState("user-info");
+  const [fetch,setFetch] = useState(1);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,10 +47,10 @@ function ProfilePage() {
   }, [token, router]);
 
   useEffect(() => {
-    if (activeTab === "my-arts") {
+   
       fetchArts();
-    }
-  }, [activeTab]);
+    
+  }, []);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -71,17 +71,17 @@ function ProfilePage() {
         email: profile.email,
       };
       const response = await axios.post(
-        "https://39b3-178-233-24-227.ngrok-free.app/show",
+        "https://39b3-178-233-24-227.ngrok-free.app/explore",
         postData,
         { headers: { "ngrok-skip-browser-warning": "69420" } }
       );
       const base64Images = response.data.images;
 
-      setImages(base64Images);  
+      setImages(base64Images); 
     } catch (error) {
       console.error("İstek gönderilirken bir hata oluştu:", error);
     }
-    setLoading(false); 
+    setLoading(false);
   };
 
   if (!profile) {
@@ -100,35 +100,17 @@ function ProfilePage() {
     <>
       <Navbar />
       <Flex mb={"20em"} direction="column" align="center" mt={8}>
-        <img src="/logo.png" alt="Logo" width={150} height={150} />
-        <Text fontSize="xl" fontWeight="bold" mt={4}>
-          {profile.email}
+        <Text fontSize="3xl" fontWeight="bold" mt={4}>
+           Explore!
         </Text>
         <ButtonGroup mt={4}>
-          <Button
-            colorScheme="purple"
-            onClick={() => {
-              handleTabClick("my-arts");
-            }}
-            isActive={activeTab === "my-arts"}
-          >
-            Bookmarks
-          </Button>
-          <Button
-            colorScheme="purple"
-            onClick={() => handleTabClick("user-info")}
-            isActive={activeTab === "user-info"}
-          >
-            User Info
-          </Button>
         </ButtonGroup>
-        {activeTab === "my-arts" && (
           <>
             {loading ? (
               <Box mt={"12em"} textAlign="center">
                 <Spinner size="xl" color="purple.500" />
                 <Text mt={4} fontWeight="bold">
-                  Loading Arts...
+                  Exploring...
                 </Text>
               </Box>
             ) : (
@@ -164,16 +146,7 @@ function ProfilePage() {
               </Grid>
             )}
           </>
-        )}
-        {activeTab === "user-info" && (
-          <Box mt={8}>
-            <Text fontSize="xl" fontWeight="bold">
-              User Info
-            </Text>
-            <Text>{profile.email}</Text>
-            {/* Add more user information as needed */}
-          </Box>
-        )}
+        
       </Flex>
       <Footer />
     </>

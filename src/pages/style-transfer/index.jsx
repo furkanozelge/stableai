@@ -5,10 +5,13 @@ import Navbar from "../../components/Navbar";
 import { image1Base64 } from "./base64-1";
 import { image2Base64 } from "./base64-2";
 import router from "next/router";
+import { MdBookmark } from "react-icons/md";
 import { image3Base64 } from "./base64-3";
 import Cookies from "js-cookie";
+import { getProfile } from '../../../utils/api';
 import {
   Flex,
+  Spinner,
   Box,
   Wrap,
   Input,
@@ -21,21 +24,14 @@ import {
 import Image from "next/image";
 const ImageUploader = () => {
   const token = Cookies.get("access_token");
-  useEffect(() => {
-    if (!token) {
-      router.push("/sign-in");
-    }
-  }, [token, router]);
-
-  if (!token) {
-    return <div>Loading...</div>;
-  }
   const example1 = image1Base64;
   const example2 = image2Base64;
   const example3 = image3Base64;
-
+  const [profile, setProfile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [prompt,setPrompt] = useState("neuralTransfer")
+  const [loading, updateLoading] = useState();
   const [selectedImage2, setSelectedImage2] = useState(null);
   const [example, setExample] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +55,7 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://f772-35-184-235-218.ngrok-free.app/style-transfer";
+        const url = "https://28b3-34-87-54-247.ngrok-free.app/style-transfer";
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
@@ -112,7 +108,7 @@ const ImageUploader = () => {
         const base64Data2 = reader2.result.split(",")[1];
 
         try {
-          const url = "https://f772-35-184-235-218.ngrok-free.app/style-transfer";
+          const url = "https://28b3-34-87-54-247.ngrok-free.app/style-transfer";
           const headers = {
             "content-type": "application/json",
             "ngrok-skip-browser-warning": "69420",
@@ -147,6 +143,21 @@ const ImageUploader = () => {
 
     reader.readAsDataURL(selectedImage);
   };
+  const handleBookmark = async () => {
+    setIsLoading(true);
+    try {
+      const postData = {
+        mail: profile.email,
+        prompt: prompt,
+        image: uploadedImage,
+      };
+      const response = await axios.post('https://39b3-178-233-24-227.ngrok-free.app/share', postData,{ headers: { "ngrok-skip-browser-warning": "69420" } });
+      console.log(response)
+    } catch (error) {
+      console.error('İstek gönderilirken bir hata oluştu:', error);
+    }
+    setIsLoading(false);
+  };
 
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
@@ -156,7 +167,35 @@ const ImageUploader = () => {
     const file2 = event.target.files[0];
     setSelectedImage2(file2);
   };
+  useEffect(() => {
+    if (!token) {
+      router.push('/sign-in');
+      return;
+    }
 
+    const fetchProfile = async () => {
+      try {
+        const response = await getProfile(token);
+        setProfile(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfile();
+  }, [token, router]);
+
+  if (!profile) {
+    return (
+      <Flex direction="column" minH="100vh">
+        <Navbar />
+        <Flex flex={1} justify="center" align="center">
+          <Spinner size="xl" color="purple.500" />
+        </Flex>
+        <Footer />
+      </Flex>
+    );
+  }
   return (
     <div>
       <Navbar />
@@ -338,6 +377,8 @@ const ImageUploader = () => {
                   src={`data:image/jpeg;base64, ${uploadedImage}`}
                   alt="Uploaded"
                 />
+                 <Text>You can bookmark your art!</Text>
+                <MdBookmark size={100} onClick={handleBookmark}></MdBookmark>
               </Box>
             </Flex>
           )}
