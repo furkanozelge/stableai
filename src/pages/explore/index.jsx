@@ -48,7 +48,7 @@ function ProfilePage() {
 
   useEffect(() => {
     fetchArts();
-  }, [0]);
+  }, []);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
