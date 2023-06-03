@@ -21,10 +21,10 @@ import Footer from "../../components/Footer";
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
-  const [fetch,setFetch] = useState(1);
+  const [fetch, setFetch] = useState(1);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [prompt, setPrompt] = useState([]);
   const router = useRouter();
   const token = Cookies.get("access_token");
 
@@ -47,10 +47,8 @@ function ProfilePage() {
   }, [token, router]);
 
   useEffect(() => {
-   
-      fetchArts();
-    
-  }, []);
+    fetchArts();
+  }, [0]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -76,8 +74,9 @@ function ProfilePage() {
         { headers: { "ngrok-skip-browser-warning": "69420" } }
       );
       const base64Images = response.data.images;
-
-      setImages(base64Images); 
+      const prompts = response.data.prompts;
+      setPrompt(prompts);
+      setImages(base64Images);
     } catch (error) {
       console.error("İstek gönderilirken bir hata oluştu:", error);
     }
@@ -101,21 +100,21 @@ function ProfilePage() {
       <Navbar />
       <Flex mb={"20em"} direction="column" align="center" mt={8}>
         <Text fontSize="3xl" fontWeight="bold" mt={4}>
-           Explore!
+          Explore!
         </Text>
-        <ButtonGroup mt={4}>
-        </ButtonGroup>
-          <>
-            {loading ? (
-              <Box mt={"12em"} textAlign="center">
-                <Spinner size="xl" color="purple.500" />
-                <Text mt={4} fontWeight="bold">
-                  Exploring...
-                </Text>
-              </Box>
-            ) : (
-              <Grid templateColumns="repeat(4, 1fr)" gap={6} mt={8}>
-                {images.map((base64, index) => (
+        <ButtonGroup mt={4}></ButtonGroup>
+        <>
+          {loading ? (
+            <Box mt={"12em"} textAlign="center">
+              <Spinner size="xl" color="purple.500" />
+              <Text mt={4} fontWeight="bold">
+                Exploring...
+              </Text>
+            </Box>
+          ) : (
+            <Grid templateColumns="repeat(4, 1fr)" gap={6} mt={8}>
+              {images.length > 0 &&
+                images.map((base64, index) => (
                   <GridItem key={index}>
                     <Box
                       as="div"
@@ -137,16 +136,19 @@ function ProfilePage() {
                         width={250}
                         height={250}
                       />
-                      <Text as="b" color="purple.400" mt={2}>{`Art ${
-                        index + 1
-                      }`}</Text>
+                      {prompt.length > 0 && (
+                        <Text
+                          as="b"
+                          color="purple.400"
+                          mt={3}
+                        >{`Art ${prompt[index]}`}</Text>
+                      )}
                     </Box>
                   </GridItem>
                 ))}
-              </Grid>
-            )}
-          </>
-        
+            </Grid>
+          )}
+        </>
       </Flex>
       <Footer />
     </>
