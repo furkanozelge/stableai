@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { css } from "@emotion/react";
 import Footer from "../../components/Footer";
+import { JWT_API } from "../../../utils/apiLinks";
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -71,7 +72,7 @@ function ProfilePage() {
         email: profile.email,
       };
       const response = await axios.post(
-        "https://39b3-178-233-24-227.ngrok-free.app/show",
+        `${JWT_API}/show`,
         postData,
         { headers: { "ngrok-skip-browser-warning": "69420" } }
       );

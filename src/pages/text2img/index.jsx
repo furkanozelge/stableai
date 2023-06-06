@@ -32,6 +32,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import router from "next/router";
 import Cookies from "js-cookie";
+import {GENERATE_API,JWT_API} from "../../../utils/apiLinks"
 import Footer from "../../components/Footer";
 
 const App = () => {
@@ -96,7 +97,7 @@ const App = () => {
   const generate = async (prompt) => {
     updateLoading(true);
     const result = await axios.get(
-      `https://28b3-34-87-54-247.ngrok-free.app/?prompt=${prompt}&scale=${sliderValue}`,
+      `${GENERATE_API}/?prompt=${prompt}&scale=${sliderValue}`,
       { headers: { "ngrok-skip-browser-warning": "69420" } }
     );
     updateImage(result.data);
@@ -112,7 +113,7 @@ const App = () => {
         prompt: prompt,
         image: image,
       };
-      const response = await axios.post('https://39b3-178-233-24-227.ngrok-free.app/share', postData,{ headers: { "ngrok-skip-browser-warning": "69420" } });
+      const response = await axios.post(`${JWT_API}/share`, postData,{ headers: { "ngrok-skip-browser-warning": "69420" } });
       console.log(response)
     } catch (error) {
       console.error('İstek gönderilirken bir hata oluştu:', error);

@@ -1,7 +1,6 @@
 import axios from 'axios';
-
-const API_BASE_URL = 'https://39b3-178-233-24-227.ngrok-free.app';
-
+import { JWT_API } from './apiLinks';
+const API_BASE_URL = JWT_API;
 const headers = {
   'ngrok-skip-browser-warning': '69420',
   'Content-Type': 'application/json',

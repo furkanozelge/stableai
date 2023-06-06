@@ -17,6 +17,7 @@ import { getProfile } from "../../../utils/api";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { css } from "@emotion/react";
+import { JWT_API } from "../../../utils/apiLinks";
 import Footer from "../../components/Footer";
 
 function ProfilePage() {
@@ -27,7 +28,25 @@ function ProfilePage() {
   const [prompt, setPrompt] = useState([]);
   const router = useRouter();
   const token = Cookies.get("access_token");
-
+  const fetchArts = async () => {
+    try {
+      const postData = {
+        email: profile.email,
+      };
+      const response = await axios.post(
+        `${JWT_API}/explore`,
+        postData,
+        { headers: { "ngrok-skip-browser-warning": "69420" } }
+      );
+      const base64Images = response.data.images;
+      const prompts = response.data.prompts;
+      setPrompt(prompts);
+      setImages(base64Images);
+    } catch (error) {
+      console.error("İstek gönderilirken bir hata oluştu:", error);
+    }
+    setLoading(false);
+  };
   useEffect(() => {
     if (!token) {
       router.push("/sign-in");
@@ -36,19 +55,22 @@ function ProfilePage() {
 
     const fetchProfile = async () => {
       try {
+        
         const response = await getProfile(token);
         setProfile(response);
+        
+        
       } catch (error) {
         console.error(error);
       }
     };
-
+  
     fetchProfile();
   }, [token, router]);
 
   useEffect(() => {
     fetchArts();
-  }, []);
+  }, [profile]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -63,25 +85,7 @@ function ProfilePage() {
     });
   };
 
-  const fetchArts = async () => {
-    try {
-      const postData = {
-        email: profile.email,
-      };
-      const response = await axios.post(
-        "https://39b3-178-233-24-227.ngrok-free.app/explore",
-        postData,
-        { headers: { "ngrok-skip-browser-warning": "69420" } }
-      );
-      const base64Images = response.data.images;
-      const prompts = response.data.prompts;
-      setPrompt(prompts);
-      setImages(base64Images);
-    } catch (error) {
-      console.error("İstek gönderilirken bir hata oluştu:", error);
-    }
-    setLoading(false);
-  };
+  
 
   if (!profile) {
     return (

@@ -9,6 +9,7 @@ import { MdBookmark } from "react-icons/md";
 import { image3Base64 } from "./base64-3";
 import Cookies from "js-cookie";
 import { getProfile } from '../../../utils/api';
+import { GENERATE_API,JWT_API } from "../../../utils/apiLinks";
 import {
   Flex,
   Spinner,
@@ -55,7 +56,7 @@ const ImageUploader = () => {
       const base64Data = reader.result.split(",")[1];
 
       try {
-        const url = "https://28b3-34-87-54-247.ngrok-free.app/style-transfer";
+        const url = `${GENERATE_API}/style-transfer`;
         const headers = {
           "content-type": "application/json",
           "ngrok-skip-browser-warning": "69420",
@@ -108,7 +109,7 @@ const ImageUploader = () => {
         const base64Data2 = reader2.result.split(",")[1];
 
         try {
-          const url = "https://28b3-34-87-54-247.ngrok-free.app/style-transfer";
+          const url = `${GENERATE_API}/style-transfer`;
           const headers = {
             "content-type": "application/json",
             "ngrok-skip-browser-warning": "69420",
@@ -151,7 +152,7 @@ const ImageUploader = () => {
         prompt: prompt,
         image: uploadedImage,
       };
-      const response = await axios.post('https://39b3-178-233-24-227.ngrok-free.app/share', postData,{ headers: { "ngrok-skip-browser-warning": "69420" } });
+      const response = await axios.post(`${JWT_API}/share`, postData,{ headers: { "ngrok-skip-browser-warning": "69420" } });
       console.log(response)
     } catch (error) {
       console.error('İstek gönderilirken bir hata oluştu:', error);
